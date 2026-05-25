@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central Dosimetry for Theranostics | Medwave Medical Imaging</title>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --col-top-bar: #2b96bc; --teal: #29aba4; --orange: #f7941d; --text-dark: #333333; --page-padding: 60px; --accent: #f7941d; --accent-dark: #d4780e; }
+        html { scroll-behavior: smooth; }
+        body { margin: 0; padding: 0; font-family: 'Titillium Web', sans-serif; color: var(--text-dark); line-height: 1.6; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; background-color: #f9fbfb; background-image: radial-gradient(circle, #d1e8e6 0.5px, transparent 3px), linear-gradient(180deg, #e0f2f1 0%, #f9fbfb 100%); background-size: 40px 40px, auto; }
+        *, *:before, *:after { box-sizing: border-box; }
+        ul { list-style: none; margin: 0; padding: 0; }
+        .background-fx-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; overflow: hidden; }
+        .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.3; }
+        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--teal); }
+        .blob-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: var(--orange); }
+
+        /* TOP BAR */
+        .top-bar { background-color: var(--col-top-bar); height: 50px; position: relative; z-index: 2000; }
+        .top-bar-inner { max-width: 1300px; margin: 0 auto; padding: 0 var(--page-padding); height: 100%; display: flex; align-items: center; }
+        .main-menu { display: flex; height: 100%; align-items: center; gap: 10px; margin-right: auto; }
+        .menu-item { position: relative; height: 100%; display: flex; align-items: center; }
+        .menu-link { color: rgba(255,255,255,0.95); text-decoration: none; font-size: 13px; font-weight: 600; text-transform: uppercase; transition: all 0.3s ease; position: relative; padding: 15px 15px; display: block; }
+        .menu-link:hover { color: #fff; background-color: rgba(255,255,255,0.1); border-radius: 4px; }
+        .menu-link::after { content: ''; position: absolute; width: 0; height: 3px; bottom: 0; left: 15px; background-color: var(--orange); transition: width 0.3s; }
+        .menu-item:hover .menu-link::after { width: calc(100% - 30px); }
+        .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background-color: rgba(247,148,29,0.6); min-width: 240px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid rgba(255,255,255,0.4); border-radius: 0 0 10px 10px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); padding: 10px 0; z-index: 2001; }
+        .menu-item:hover .dropdown-menu { display: block; }
+        .dropdown-menu a { color: white; text-decoration: none; display: block; padding: 12px 20px; font-size: 13px; font-weight: 600; text-transform: uppercase; transition: 0.2s; border-bottom: 1px solid rgba(255,255,255,0.15); white-space: nowrap; }
+        .dropdown-menu li:last-child a { border-bottom: none; }
+        .dropdown-menu a:hover { background-color: rgba(255,255,255,0.2); padding-left: 25px; }
+        .dropdown-menu a.active { background-color: rgba(255,255,255,0.15); border-left: 3px solid white; padding-left: 17px; font-weight: 700; }
+        #menu-toggle { display: none; }
+        .menu-icon { display: none; font-size: 24px; color: white; cursor: pointer; margin-left: auto; z-index: 2002; }
+        .menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: transparent; z-index: 2000; }
+
+        /* LOGO BAR */
+        .logo-bar { background: transparent; padding: 20px 0; }
+        .logo-bar-inner { max-width: 1300px; margin: 0 auto; padding: 0 var(--page-padding); }
+        .logo-bar-inner img { height: 55px; width: auto; }
+
+        /* HERO */
+        .page-hero { background-color: var(--orange); padding: 50px 0; color: white; }
+        .hero-content { max-width: 1300px; margin: 0 auto; padding: 0 var(--page-padding); }
+        .page-hero h1 { font-size: clamp(28px, 4vw, 46px); text-transform: uppercase; font-weight: 700; margin: 0 0 12px; letter-spacing: -0.5px; }
+        .page-hero p { font-size: 18px; opacity: 0.9; margin: 0; max-width: 640px; font-weight: 300; }
+
+        /* CONTENT */
+        .page-body { flex: 1; padding: 60px var(--page-padding) 40px; display: grid; grid-template-columns: 1fr 300px; gap: 50px; max-width: 1300px; width: 100%; margin: 0 auto; align-items: start; }
+        .content-main h2 { font-size: 22px; text-transform: uppercase; color: var(--accent); font-weight: 700; margin: 0 0 20px; padding-bottom: 10px; border-bottom: 2px solid var(--accent); }
+        .content-main h3 { font-size: 16px; text-transform: uppercase; color: var(--accent); font-weight: 700; margin: 30px 0 14px; }
+        .content-main p { font-size: 16px; color: #555; margin-bottom: 20px; }
+
+        .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 30px; }
+        .feature-card { background: white; border-radius: 10px; padding: 24px 20px; border-top: 4px solid var(--accent); box-shadow: 0 2px 12px rgba(247,148,29,0.1); transition: transform 0.2s, box-shadow 0.2s; }
+        .feature-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(247,148,29,0.18); }
+        .feature-card .icon { margin-bottom: 10px; } .icon img { width: 32px; height: 32px; } .feature-card .icon { [img replaced]margin-bottom: 10px; }
+        .feature-card h3 { font-size: 14px; font-weight: 700; text-transform: uppercase; color: var(--accent); margin: 0 0 8px; border: none; padding: 0; }
+        .feature-card p { font-size: 13px; color: #666; margin: 0; line-height: 1.5; }
+
+        .highlight-box { background: white; border-radius: 12px; padding: 28px 30px; border-left: 5px solid var(--accent); box-shadow: 0 4px 20px rgba(247,148,29,0.1); margin-bottom: 30px; }
+        .highlight-box p { margin: 0; font-size: 16px; color: #444; font-style: italic; line-height: 1.7; }
+
+        /* SIDEBAR */
+        .content-sidebar { position: sticky; top: 20px; }
+        .sidebar-nav { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 24px; }
+        .sidebar-nav-header { background: var(--accent); color: white; padding: 16px 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .sidebar-nav ul { padding: 8px 0; }
+        .sidebar-nav ul li a { display: block; padding: 11px 20px; font-size: 13px; font-weight: 600; text-transform: uppercase; color: #444; text-decoration: none; border-bottom: 1px solid #f0f0f0; transition: all 0.2s; }
+        .sidebar-nav ul li:last-child a { border-bottom: none; }
+        .sidebar-nav ul li a:hover { background: #fff8f0; color: var(--accent); padding-left: 26px; }
+        .sidebar-nav ul li a.active { background: #fff3e0; color: var(--accent); border-left: 3px solid var(--accent); padding-left: 17px; font-weight: 700; }
+        .sidebar-cta { background: linear-gradient(135deg, var(--orange), var(--accent-dark)); border-radius: 12px; padding: 28px 24px; color: white; text-align: center; }
+        .sidebar-cta h3 { font-size: 16px; text-transform: uppercase; margin: 0 0 10px; }
+        .sidebar-cta p { font-size: 13px; opacity: 0.9; margin: 0 0 20px; line-height: 1.5; }
+        .sidebar-cta a { display: inline-block; background: white; color: var(--accent); padding: 10px 24px; border-radius: 4px; text-decoration: none; font-size: 13px; font-weight: 700; text-transform: uppercase; transition: transform 0.2s, box-shadow 0.2s; }
+        .sidebar-cta a:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.15); }
+
+        /* FOOTER */
+        .footer-wrapper { margin-top: 60px; }
+        footer { background-color: var(--orange); color: white; text-align: center; padding: 30px 20px; font-size: 13px; position: relative; z-index: 100; }
+        footer a { color: white; }
+
+        /* MOBILE */
+        @media (max-width: 1024px) {
+            :root { --page-padding: 25px; }
+            .top-bar-inner { justify-content: space-between; padding: 0 20px; }
+            .menu-icon { display: block; }
+            .main-menu { display: none; flex-direction: column; position: absolute; top: 50px; right: 0; width: max-content; min-width: 160px; height: auto; gap: 0; background-color: rgba(247,148,29,0.92); backdrop-filter: blur(12px); border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; padding: 10px 0; box-shadow: 0 10px 20px rgba(0,0,0,0.2); z-index: 2001; }
+            #menu-toggle:checked ~ .main-menu { display: flex; }
+            #menu-toggle:checked ~ .menu-overlay { display: block; }
+            .menu-item { width: 100%; flex-direction: column; align-items: stretch; height: auto; }
+            .menu-link { width: 100%; padding: 10px 25px 10px 20px; text-align: right; border-bottom: 1px solid rgba(255,255,255,0.1); white-space: nowrap; }
+            .menu-link::after { display: none; }
+            .dropdown-menu { top: 0; left: auto; right: 100%; width: max-content; min-width: 200px; border-radius: 10px; background-color: rgba(247,148,29,0.92); border: 1px solid rgba(255,255,255,0.2); padding: 5px 0; }
+            .dropdown-menu a { text-align: right; padding: 8px 25px 8px 20px; white-space: nowrap; }
+            .page-body { grid-template-columns: 1fr; padding: 40px var(--page-padding); gap: 30px; }
+            .content-sidebar { position: static; }
+            .feature-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 600px) { .feature-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="background-fx-layer"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
+
+    <div class="top-bar">
+        <div class="top-bar-inner">
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="menu-icon">&#9776;</label>
+        <label for="menu-toggle" class="menu-overlay"></label>
+        <ul class="main-menu">
+            <li class="menu-item"><a href="../index.html" class="menu-link">Home</a></li>
+            <li class="menu-item dropdown">
+                <a href="../clinical-research/clinical-operations.html" class="menu-link">Clinical Research</a>
+                <ul class="dropdown-menu">
+                    <li><a href="../clinical-research/clinical-operations.html">Clinical Operations</a></li>
+                    <li><a href="../clinical-research/oncology.html">Oncology</a></li>
+                    <li><a href="../clinical-research/cardiology.html">Cardiology</a></li>
+                    <li><a href="../clinical-research/investigator-initiated-studies.html">Investigator Initiated Studies</a></li>
+                    <li><a href="../clinical-research/clinical-trial-unit-support.html">Clinical Trial Unit Support</a></li>
+                </ul>
+            </li>
+            <li class="menu-item dropdown">
+                <a href="central-image-repository.html" class="menu-link">Medical Imaging</a>
+                <ul class="dropdown-menu">
+                    <li><a href="central-image-repository.html">Central Image Repository</a></li>
+                    <li><a href="central-imaging-in-oncology.html">Central Imaging in Oncology</a></li>
+                    <li><a href="central-imaging-in-cardiology.html">Central Imaging in Cardiology</a></li>
+                    <li><a href="tumor-response-training.html">Tumor Response Training</a></li>
+                    <li><a href="central-dosimetry-for-theranostics.html" class="active">Central Dosimetry for Theranostics</a></li>
+                    <li><a href="post-processing-perfusion-mri.html">Post-processing Perfusion MRI</a></li>
+                </ul>
+            </li>
+            <li class="menu-item dropdown">
+                <a href="../about/our-story.html" class="menu-link">About</a>
+                <ul class="dropdown-menu">
+                    <li><a href="../about/core-team.html">Core Team</a></li>
+                    <li><a href="../about/joining-medwave.html">Joining Medwave</a></li>
+                    <li><a href="../about/experiences.html">Experiences</a></li>
+                </ul>
+            </li>
+            <li class="menu-item"><a href="../contact.html" class="menu-link">Contact</a></li>
+        </ul>
+        </div>
+    </div>
+
+    <div class="logo-bar">
+        <div class="logo-bar-inner">
+            <img src="../medwave-medical-imaging.png" alt="Medwave Medical Imaging">
+        </div>
+    </div>
+
+    <div class="page-hero">
+        <div class="hero-content">
+            <h1>Central Dosimetry for Theranostics (Lu177)</h1>
+            <p>Fast, remote dosimetry assessments for Lu177 theranostics — for clinical trials and clinical routine.</p>
+        </div>
+    </div>
+
+    <div class="page-body">
+        <div class="content-main">
+            <h2>Dosimetry Services</h2>
+            <p>Medwave provides central dosimetry services for Lu177 theranostics in both clinical trial and routine settings. Our platform enables fast, remote dosimetry assessments, reducing the logistical burden on nuclear medicine departments while meeting emerging EU regulatory requirements.</p>
+
+
+            <h3>Clinical Trials</h3>
+            <div class="feature-grid">
+                <div class="feature-card"><div class="icon"><img src="../beeldmerk1.png" alt=""></div><h3>Remote Dosimetry</h3><p>Remote dosimetry assessments using analysis software. No on-site infrastructure required beyond image upload.</p></div>
+                <div class="feature-card"><div class="icon"><img src="../beeldmerk1.png" alt=""></div><h3>1-2 Day Turnaround</h3><p>Results delivered within 1-2 days of image receipt, keeping your trial timelines on track.</p></div>
+                <div class="feature-card"><div class="icon"><img src="../beeldmerk1.png" alt=""></div><h3>Platform Access</h3><p>Sites upload SPECT/CT images via our imaging portal, accessible from any location with internet connectivity.</p></div>
+            </div>
+            <h3>Clinical Routine</h3>
+            <div class="feature-grid">
+                <div class="feature-card"><div class="icon"><img src="../beeldmerk1.png" alt=""></div><h3>30-Minute Results</h3><p>Dosimetry calculations generated within 30 minutes after SPECT/CT scans are uploaded to the portal.</p></div>
+                <div class="feature-card"><div class="icon"><img src="../beeldmerk1.png" alt=""></div><h3>Independent or Assisted</h3><p>Site staff can perform calculations independently or request expert assistance from Medwave dosimetrists.</p></div>
+                <div class="feature-card"><div class="icon"><img src="../beeldmerk1.png" alt=""></div><h3>EU Regulation Compliant</h3><p>New EU regulations mandate dosimetry for all patients receiving radionuclide treatments. Our solution keeps you compliant.</p></div>
+            </div>
+
+        </div>
+
+        <div class="content-sidebar">
+            <div class="sidebar-nav">
+                <div class="sidebar-nav-header">Medical Imaging</div>
+                <ul>
+                    <li><a href="central-image-repository.html">Central Image Repository</a></li>
+                    <li><a href="central-imaging-in-oncology.html">Central Imaging in Oncology</a></li>
+                    <li><a href="central-imaging-in-cardiology.html">Central Imaging in Cardiology</a></li>
+                    <li><a href="tumor-response-training.html">Tumor Response Training</a></li>
+                    <li><a href="central-dosimetry-for-theranostics.html" class="active">Central Dosimetry for Theranostics</a></li>
+                    <li><a href="post-processing-perfusion-mri.html">Post-processing Perfusion MRI</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-cta">
+                <h3>Dosimetry Questions?</h3>
+                <p>Request a platform demo or discuss how we can support your theranostics programme.</p>
+                <a href="mailto:info@medwave.nl">Get in Touch</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-wrapper">
+        <footer>&copy; 2025 Medwave &nbsp;|&nbsp; <a href="mailto:info@medwave.nl">info@medwave.nl</a></footer>
+    </div>
+</body>
+</html>

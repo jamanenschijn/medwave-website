@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medwave | Clinical Research & Medical Imaging</title>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --col-top-bar: #2b96bc;
+            --teal:   #29aba4;
+            --orange: #f7941d;
+            --col-footer: #29aba4;
+            --page-padding: 60px;
+        }
+
+        html { scroll-behavior: smooth; height: 100%; }
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Titillium Web', sans-serif;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+            display: flex; flex-direction: column; min-height: 100vh;
+            background-color: #f9fbfb;
+            background-image:
+                radial-gradient(circle, #d1e8e6 0.5px, transparent 3px),
+                linear-gradient(180deg, #e0f2f1 0%, #f9fbfb 100%);
+            background-size: 40px 40px, auto;
+        }
+        *, *:before, *:after { box-sizing: border-box; }
+        ul { list-style: none; margin: 0; padding: 0; }
+
+        .background-fx-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; overflow: hidden; }
+        .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.3; }
+        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--teal); }
+        .blob-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: var(--orange); }
+
+        /* ── NAV ── */
+        .top-bar { background-color: var(--col-top-bar); height: 50px; position: relative; z-index: 2000; }
+        .top-bar-inner { max-width: 1300px; margin: 0 auto; padding: 0 var(--page-padding); height: 100%; display: flex; align-items: center; }
+        .main-menu { display: flex; height: 100%; align-items: center; gap: 10px; margin-right: auto; }
+        .menu-item { position: relative; height: 100%; display: flex; align-items: center; }
+        .menu-link { color: rgba(255,255,255,.95); text-decoration: none; font-size: 13px; font-weight: 600; text-transform: uppercase; transition: all .3s; position: relative; padding: 15px; display: block; }
+        .menu-link:hover { color: #fff; background: rgba(255,255,255,.1); border-radius: 4px; }
+        .menu-link::after { content:''; position: absolute; width: 0; height: 3px; bottom: 0; left: 15px; background: var(--orange); transition: width .3s; }
+        .menu-item:hover .menu-link::after { width: calc(100% - 30px); }
+        .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background: rgba(37,174,166,.6); min-width: 220px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid rgba(255,255,255,.4); border-left: 1px solid rgba(255,255,255,.2); border-radius: 0 0 10px 10px; box-shadow: 0 15px 35px rgba(0,0,0,.2); padding: 10px 0; z-index: 2001; }
+        .menu-item:hover .dropdown-menu { display: block; }
+        .dropdown-menu a { color: white; text-decoration: none; display: block; padding: 12px 20px; font-size: 13px; font-weight: 600; text-transform: uppercase; transition: .2s; border-bottom: 1px solid rgba(255,255,255,.15); white-space: nowrap; }
+        .dropdown-menu li:last-child a { border-bottom: none; }
+        .dropdown-menu a:hover { background: rgba(255,255,255,.2); padding-left: 25px; }
+        #menu-toggle { display: none; }
+        .menu-icon { display: none; font-size: 24px; color: white; cursor: pointer; margin-left: auto; z-index: 2002; position: relative; }
+        .menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: transparent; z-index: 2000; }
+
+        /* ══════════════════════════════════════════
+           WAVE BLOCK
+           Teal fades to transparent from the left;
+           orange fades to transparent from the right;
+           they meet over a clean white-ish base.
+           No muddy brown middle — just a crisp two-
+           tone wave that breathes.
+           ══════════════════════════════════════════ */
+        .content-block-outer {
+            width: 100%; position: relative; z-index: 10;
+            /* Pastel — teal and orange at ~45 % opacity so logos and
+               dark text both have enough contrast                  */
+            background:
+                linear-gradient(to right, rgba(41,171,164,.45) 0%, rgba(41,171,164,.45) 38%, rgba(41,171,164,0) 56%),
+                linear-gradient(to left,  rgba(247,148,29,.45) 0%, rgba(247,148,29,.45) 38%, rgba(247,148,29,0) 56%),
+                #f0faf9;
+            --mask-top:    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' fill='black' transform='rotate(180 600 60)'/%3E%3C/svg%3E");
+            --mask-bottom: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' fill='black'/%3E%3C/svg%3E");
+            -webkit-mask-image: linear-gradient(black,black), var(--mask-top), var(--mask-bottom);
+            -webkit-mask-position: center, top center, bottom center;
+            -webkit-mask-size: 100% calc(100% - 198px), 100% 100px, 100% 100px;
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-composite: source-over;
+            mask-composite: add;
+        }
+
+        .content-inner-flex { display: flex; width: 100%; }
+        .split-column { flex: 1; display: flex; flex-direction: column; position: relative; }
+
+        /* Pastel background → dark text */
+        .split-column .column-content { color: #2d3a3a; }
+
+        .column-content {
+            flex: 1;
+            padding: 130px var(--page-padding) 130px;
+            display: flex; flex-direction: column; justify-content: center; min-height: 560px;
+        }
+        .split-column:first-child .column-content {
+            padding-left: max(var(--page-padding), calc((100vw - 1300px)/2 + var(--page-padding)));
+            border-right: 1px solid rgba(255,255,255,.2);
+        }
+        .split-column:last-child .column-content {
+            padding-right: max(var(--page-padding), calc((100vw - 1300px)/2 + var(--page-padding)));
+        }
+
+        /* Logo on a white pill — always visible regardless of bg colour */
+        .col-logo-wrap {
+            display: inline-flex;
+            align-items: center;
+            align-self: flex-start;
+            background: rgba(255,255,255,.85);
+            backdrop-filter: blur(6px);
+            border-radius: 10px;
+            padding: 10px 20px;
+            margin-bottom: 28px;
+            box-shadow: 0 2px 12px rgba(0,0,0,.10);
+        }
+        .col-logo {
+            display: block;
+            height: 40px;
+            width: auto;
+        }
+
+        .col-eyebrow { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 10px; display: block; color: #555; }
+
+        .col-accent { width: 36px; height: 3px; border-radius: 2px; margin-bottom: 18px; }
+        .split-column:first-child .col-accent { background: var(--teal); }
+        .split-column:last-child  .col-accent { background: var(--orange); }
+
+        .column-content h2 {
+            font-size: clamp(24px, 2.8vw, 36px); font-weight: 700;
+            text-transform: uppercase; margin: 0 0 14px;
+            line-height: 1.1; letter-spacing: -.5px;
+        }
+        .split-column:first-child .column-content h2 { color: #1a6660; }
+        .split-column:last-child  .column-content h2 { color: #7a3d00; }
+
+        .column-content p { font-size: 15px; font-weight: 400; line-height: 1.75; margin: 0 0 28px; color: #3a4a4a; }
+
+        /* Pills */
+        .service-pills { display: flex; flex-wrap: wrap; gap: 9px; }
+        .pill { display: inline-block; padding: 8px 18px; font-size: 11px; font-weight: 700; text-transform: uppercase; text-decoration: none; border-radius: 50px; letter-spacing: .5px; transition: transform .2s, box-shadow .2s, background .2s, color .2s; }
+        .pill:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,.25); }
+        .pill-ghost { background: rgba(255,255,255,.55); color: #2d3a3a; border: 1.5px solid rgba(255,255,255,.8); }
+        .pill-ghost:hover { background: white; border-color: white; box-shadow: 0 4px 12px rgba(0,0,0,.12); }
+        .split-column:first-child .pill-ghost:hover { color: var(--teal); }
+        .split-column:last-child  .pill-ghost:hover { color: var(--orange); }
+
+        /* Mobile wave stubs */
+        .mobile-wave { display: none; width: 100%; height: 80px; position: absolute; left: 0; z-index: 20; overflow: hidden; line-height: 0; }
+        .mobile-wave svg { display: block; width: calc(150% + 1.3px); height: 100%; left: -25%; position: relative; }
+        .fill-teal   { fill: var(--teal); }
+        .fill-orange { fill: var(--orange); }
+
+        /* ── STATS STRIP ── */
+        .stats-strip {
+            padding: 60px var(--page-padding) 50px;
+            position: relative; z-index: 5;
+        }
+        .stats-inner {
+            max-width: 1300px; margin: 0 auto;
+            display: flex; align-items: center; justify-content: center;
+            gap: 0; flex-wrap: wrap;
+        }
+        .stat-item {
+            display: flex; flex-direction: column; align-items: center;
+            padding: 0 48px; text-align: center;
+        }
+        .stat-number {
+            font-size: clamp(32px, 5vw, 52px);
+            font-weight: 700; line-height: 1;
+            color: var(--teal); letter-spacing: -1px;
+        }
+        .stat-label {
+            font-size: 12px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 1.5px; color: #888; margin-top: 8px;
+        }
+        .stat-divider {
+            width: 1px; height: 50px;
+            background: linear-gradient(to bottom, transparent, #ccc, transparent);
+        }
+
+        /* ── CONTACT CTA ── */
+        .cta-band {
+            padding: 0 var(--page-padding) 60px;
+        }
+        .cta-inner {
+            max-width: 1300px; margin: 0 auto;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 30px; flex-wrap: wrap;
+            background: linear-gradient(135deg, rgba(41,171,164,.08), rgba(247,148,29,.08));
+            border: 1px solid rgba(41,171,164,.2);
+            border-radius: 14px;
+            padding: 32px 48px;
+        }
+        .cta-text {
+            font-size: 18px; font-weight: 300; color: #444;
+            margin: 0; max-width: 540px; line-height: 1.5;
+        }
+        .cta-btn {
+            display: inline-block; padding: 14px 36px;
+            background: var(--col-top-bar); color: white;
+            font-size: 13px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; text-decoration: none; border-radius: 6px;
+            white-space: nowrap;
+            transition: transform .2s, box-shadow .2s;
+        }
+        .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(43,150,188,.3); }
+
+        @media (max-width: 768px) {
+            .stat-item { padding: 16px 24px; }
+            .stat-divider { display: none; }
+            .cta-inner { flex-direction: column; text-align: center; padding: 28px 24px; }
+        }
+
+        /* ── FOOTER ── */
+        .page-spacer { height: 80px; }
+        .footer-wrapper { margin-top: auto; }
+        footer { background: var(--col-footer); color: white; text-align: center; padding: 30px 20px; font-size: 13px; position: relative; z-index: 100; }
+        footer a { color: white; }
+
+        /* ── MOBILE ── */
+        @media (max-width: 1024px) {
+            :root { --page-padding: 30px; }
+            .top-bar-inner { justify-content: space-between; padding: 0 20px; }
+            .menu-icon { display: block; }
+            .main-menu { display: none; flex-direction: column; position: absolute; top: 50px; right: 0; width: max-content; min-width: 160px; height: auto; gap: 0; background: rgba(247,148,29,.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; padding: 10px 0; box-shadow: 0 10px 20px rgba(0,0,0,.2); z-index: 2001; }
+            #menu-toggle:checked ~ .main-menu { display: flex; }
+            #menu-toggle:checked ~ .menu-overlay { display: block; }
+            .menu-item { width: 100%; flex-direction: column; align-items: stretch; height: auto; }
+            .menu-link { width: 100%; padding: 10px 25px 10px 20px; text-align: right; border-bottom: 1px solid rgba(255,255,255,.1); white-space: nowrap; }
+            .menu-link::after { display: none; }
+            .menu-item.dropdown > .menu-link::before { content: '◄'; position: absolute; left: 15px; font-size: 10px; opacity: .7; top: 14px; }
+            .dropdown-menu { top: 0; left: auto; right: 100%; width: max-content; min-width: 180px; border-radius: 10px; background: rgba(247,148,29,.85); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,.2); padding: 5px 0; }
+            .dropdown-menu::after { content:''; position: absolute; top: 0; right: -20px; height: 100%; width: 20px; background: transparent; }
+            .dropdown-menu a { text-align: right; padding: 8px 25px 8px 20px; white-space: nowrap; }
+
+            .content-block-outer { -webkit-mask-image: none; mask-image: none; background: none; }
+            .content-inner-flex { flex-direction: column; }
+            .split-column:first-child .column-content { background: var(--teal); border-right: none; padding: 100px 30px 90px; }
+            .split-column:last-child  .column-content { background: var(--orange); padding: 90px 30px 100px; }
+            .mobile-wave { display: block; }
+            .mobile-wave-top    { top: 0;    transform: translateY(-99%) rotate(180deg); }
+            .mobile-wave-mid    { bottom: 0; transform: translateY(99%); z-index: 30; }
+            .mobile-wave-bottom { bottom: 0; transform: translateY(99%); }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-fx-layer">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <!-- NAV -->
+    <div class="top-bar">
+        <div class="top-bar-inner">
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="menu-icon">&#9776;</label>
+        <label for="menu-toggle" class="menu-overlay"></label>
+        <ul class="main-menu">
+            <li class="menu-item"><a href="index.html" class="menu-link">Home</a></li>
+            <li class="menu-item dropdown">
+                <a href="clinical-research/clinical-operations.html" class="menu-link">Clinical Research</a>
+                <ul class="dropdown-menu">
+                    <li><a href="clinical-research/clinical-operations.html">Clinical Operations</a></li>
+                    <li><a href="clinical-research/oncology.html">Oncology</a></li>
+                    <li><a href="clinical-research/cardiology.html">Cardiology</a></li>
+                    <li><a href="clinical-research/investigator-initiated-studies.html">Investigator Initiated Studies</a></li>
+                    <li><a href="clinical-research/clinical-trial-unit-support.html">Clinical Trial Unit Support</a></li>
+                </ul>
+            </li>
+            <li class="menu-item dropdown">
+                <a href="medical-imaging/central-image-repository.html" class="menu-link">Medical Imaging</a>
+                <ul class="dropdown-menu">
+                    <li><a href="medical-imaging/central-image-repository.html">Central Image Repository</a></li>
+                    <li><a href="medical-imaging/central-imaging-in-oncology.html">Central Imaging in Oncology</a></li>
+                    <li><a href="medical-imaging/central-imaging-in-cardiology.html">Central Imaging in Cardiology</a></li>
+                    <li><a href="medical-imaging/tumor-response-training.html">Tumor Response Training</a></li>
+                    <li><a href="medical-imaging/central-dosimetry-for-theranostics.html">Central Dosimetry for Theranostics</a></li>
+                    <li><a href="medical-imaging/post-processing-perfusion-mri.html">Post-processing Perfusion MRI</a></li>
+                </ul>
+            </li>
+            <li class="menu-item dropdown">
+                <a href="about/our-story.html" class="menu-link">About</a>
+                <ul class="dropdown-menu">
+                    <li><a href="about/our-story.html">About</a></li>
+                    <li><a href="about/core-team.html">Core Team</a></li>
+                    <li><a href="about/joining-medwave.html">Joining Medwave</a></li>
+                    <li><a href="about/experiences.html">Experiences</a></li>
+                </ul>
+            </li>
+            <li class="menu-item"><a href="contact.html" class="menu-link">Contact</a></li>
+        </ul>
+        </div>
+    </div>
+
+    <!-- WAVE BLOCK — teal left, orange right, meet through pale centre -->
+    <div class="content-block-outer">
+        <div class="content-inner-flex">
+
+            <!-- ── Clinical Research (teal side) ── -->
+            <div class="split-column">
+                <div class="mobile-wave mobile-wave-top">
+                    <svg preserveAspectRatio="none" viewBox="0 0 1200 120"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" class="fill-teal"></path></svg>
+                </div>
+                <div class="column-content">
+<div class="col-logo-wrap">
+                        <img class="col-logo" src="medwave-clinical-research.png" alt="Medwave Clinical Research">
+                    </div>
+                    <span class="col-eyebrow">Clinical Research</span>
+                    <div class="col-accent"></div>
+                    <h2>Clinical Trial Management</h2>
+                    <p>Full-service and functional support for oncology and cardiology trials. From study setup to final reporting — tailored to your needs whether you're a sponsor, biotech, or hospital trial unit.</p>
+                    <div class="service-pills">
+                        <a href="clinical-research/clinical-operations.html" class="pill pill-ghost">Clinical Operations</a>
+                        <a href="clinical-research/oncology.html" class="pill pill-ghost">Oncology</a>
+                        <a href="clinical-research/cardiology.html" class="pill pill-ghost">Cardiology</a>
+                        <a href="clinical-research/investigator-initiated-studies.html" class="pill pill-ghost">Investigator Studies</a>
+                        <a href="clinical-research/clinical-trial-unit-support.html" class="pill pill-ghost">CTU Support</a>
+                    </div>
+                </div>
+                <div class="mobile-wave mobile-wave-mid">
+                    <svg preserveAspectRatio="none" viewBox="0 0 1200 120"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" class="fill-teal"></path></svg>
+                </div>
+            </div>
+
+            <!-- ── Medical Imaging (orange side) ── -->
+            <div class="split-column">
+                <div class="column-content">
+<div class="col-logo-wrap">
+                        <img class="col-logo" src="medwave-medical-imaging.png" alt="Medwave Medical Imaging">
+                    </div>
+                    <span class="col-eyebrow">Medical Imaging</span>
+                    <div class="col-accent"></div>
+                    <h2>Advanced Imaging Services</h2>
+                    <p>Specialised central imaging services for clinical trials. Our integrated platform supports imaging review, post-processing, dosimetry, and training — bringing precision to every image-based endpoint.</p>
+                    <div class="service-pills">
+                        <a href="medical-imaging/central-image-repository.html" class="pill pill-ghost">Image Repository</a>
+                        <a href="medical-imaging/central-imaging-in-oncology.html" class="pill pill-ghost">Imaging in Oncology</a>
+                        <a href="medical-imaging/central-imaging-in-cardiology.html" class="pill pill-ghost">Imaging in Cardiology</a>
+                        <a href="medical-imaging/central-dosimetry-for-theranostics.html" class="pill pill-ghost">Theranostics</a>
+                        <a href="medical-imaging/post-processing-perfusion-mri.html" class="pill pill-ghost">Perfusion MRI</a>
+                    </div>
+                </div>
+                <div class="mobile-wave mobile-wave-bottom">
+                    <svg preserveAspectRatio="none" viewBox="0 0 1200 120"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" class="fill-orange"></path></svg>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- STATS STRIP -->
+    <div class="stats-strip">
+        <div class="stats-inner">
+            <div class="stat-item">
+                <span class="stat-number">25+</span>
+                <span class="stat-label">Years of experience</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-number">EU</span>
+                <span class="stat-label">Pan-European reach</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-number">2</span>
+                <span class="stat-label">Integrated divisions</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-number">100%</span>
+                <span class="stat-label">Oncology &amp; cardiology focus</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTACT CTA -->
+    <div class="cta-band">
+        <div class="cta-inner">
+            <p class="cta-text">Looking for a dedicated partner in clinical research or medical imaging?</p>
+            <a href="contact.html" class="cta-btn">Get in touch</a>
+        </div>
+    </div>
+
+    <div class="page-spacer"></div>
+
+    <!-- FOOTER -->
+    <div class="footer-wrapper">
+        <footer>
+            &copy; 2025 Medwave &nbsp;|&nbsp; <a href="mailto:info@medwave.nl">info@medwave.nl</a>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medwave — LinkedIn Banners</title>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --teal:   #29aba4;
+            --orange: #f7941d;
+            --navy:   #1a2e35;
+            --blue:   #2b96bc;
+        }
+
+        body {
+            margin: 0; padding: 40px;
+            background: #d8dde3;
+            font-family: 'Titillium Web', sans-serif;
+            display: flex; flex-direction: column; gap: 52px; align-items: center;
+        }
+
+        .banner-wrap { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; width: 1584px; }
+        .banner-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #666; }
+
+        .banner {
+            width: 1584px; height: 396px;
+            position: relative; overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 8px 40px rgba(0,0,0,.20);
+        }
+
+        /* ════════════════════════════════════════════════════
+           BANNER 1 — Classic Split, website teal | orange
+           Logo on white pill, watermarks centred per column
+        ════════════════════════════════════════════════════ */
+        .b1 {
+            background: linear-gradient(90deg, var(--teal) 50%, var(--orange) 50%);
+        }
+
+        /* dot grid matching website exactly */
+        .b1::before {
+            content: ''; position: absolute; inset: 0;
+            background-image: radial-gradient(circle, rgba(255,255,255,.18) 1px, transparent 1px);
+            background-size: 28px 28px;
+            pointer-events: none; z-index: 0;
+        }
+
+        /* watermarks — beeldmerk2 centred in left col, beeldmerk1 centred in right col */
+        .b1-wm {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            opacity: .12; pointer-events: none; z-index: 0;
+            filter: brightness(0) invert(1);
+        }
+        .b1-wm img { height: 300px; width: auto; display: block; }
+        .b1-wm-left  { left: calc(25% - 150px); }
+        .b1-wm-right { left: calc(75% - 150px); }
+
+        .b1-inner {
+            position: absolute; inset: 0; z-index: 1;
+            display: flex; align-items: stretch;
+        }
+        .b1-col {
+            flex: 1; display: flex; flex-direction: column;
+            justify-content: center; padding: 0 72px;
+            color: white;
+        }
+        .b1-col:last-child { align-items: flex-end; text-align: right; }
+
+        /* white frosted pill behind logo so real colours show */
+        .b1 .logo-pill {
+            background: rgba(255,255,255,.92);
+            border-radius: 10px; padding: 10px 20px;
+            margin-bottom: 24px;
+            display: inline-flex; align-self: flex-start;
+        }
+        .b1-col:last-child .logo-pill { align-self: flex-end; }
+        .b1 .logo-img {
+            height: 52px; width: auto; max-width: 220px;
+            object-fit: contain; display: block;
+        }
+        .b1 .col-title {
+            font-size: 22px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; margin-bottom: 10px; color: white;
+        }
+        .b1 .col-list { font-size: 15px; font-weight: 300; line-height: 2; color: rgba(255,255,255,.90); }
+
+        /* vertical divider */
+        .b1-divider {
+            width: 2px; flex-shrink: 0; margin: 50px 0;
+            background: rgba(255,255,255,.30);
+        }
+
+
+        /* ════════════════════════════════════════════════════
+           BANNER 2 — Website dot-grid background
+           Teal mark LEFT, orange mark RIGHT, both vertically centred
+        ════════════════════════════════════════════════════ */
+        .b2 {
+            /* rich blue from the logo's wave pattern */
+            background: linear-gradient(135deg, #1a4e78 0%, #1e6295 50%, #1a4e78 100%);
+        }
+
+        /* teal glow left, orange glow right — stronger on dark bg */
+        .b2::before {
+            content: ''; position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse 55% 100% at 8%  50%, rgba(41,171,164,.30) 0%, transparent 65%),
+                radial-gradient(ellipse 55% 100% at 92% 50%, rgba(247,148,29,.25) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        /* teal beeldmerk on LEFT, orange on RIGHT — both vertically centred */
+        .b2-mark-left {
+            position: absolute; left: 6%; top: 50%;
+            transform: translateY(-50%);
+            opacity: .12; pointer-events: none; z-index: 0;
+        }
+        .b2-mark-right {
+            position: absolute; right: 6%; top: 50%;
+            transform: translateY(-50%);
+            opacity: .12; pointer-events: none; z-index: 0;
+        }
+        .b2-mark-left img, .b2-mark-right img { height: 260px; width: auto; display: block; }
+
+        .b2-inner {
+            position: absolute; inset: 0; z-index: 1;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center; gap: 20px;
+        }
+
+        .b2 .logos-row { display: flex; gap: 56px; align-items: center; }
+        /* logos on white pills so real colours show on dark bg */
+        .b2 .logo-pill {
+            background: rgba(255,255,255,.92); border-radius: 10px; padding: 9px 18px;
+            display: inline-flex;
+        }
+        .b2 .logo-img  { height: 52px; width: auto; max-width: 210px; object-fit: contain; display: block; }
+        .b2 .logo-sep  { width: 1px; height: 48px; background: rgba(255,255,255,.20); }
+
+        .b2 .tagline {
+            font-size: 17px; font-weight: 300; color: rgba(255,255,255,.85);
+            letter-spacing: .5px; text-align: center;
+        }
+        .b2 .tagline em      { font-style: normal; font-weight: 700; color: var(--teal); }
+        .b2 .tagline em.org  { color: var(--orange); }
+
+        .b2 .pills { display: flex; gap: 12px; margin-top: 4px; flex-wrap: wrap; justify-content: center; }
+        .b2 .pill {
+            border-radius: 20px; padding: 6px 18px;
+            font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: white;
+        }
+        .b2 .pill-teal   { background: rgba(41,171,164,.30); border: 1.5px solid rgba(41,171,164,.80); }
+        .b2 .pill-orange { background: rgba(247,148,29,.30); border: 1.5px solid rgba(247,148,29,.80); }
+
+        /* thin colour bars top and bottom */
+        .b2-bar-top, .b2-bar-bottom {
+            position: absolute; left: 0; right: 0; height: 5px; z-index: 2;
+        }
+        .b2-bar-top    { top: 0;    background: linear-gradient(90deg, var(--teal) 50%, var(--orange) 50%); }
+        .b2-bar-bottom { bottom: 0; background: linear-gradient(90deg, var(--teal) 50%, var(--orange) 50%); }
+
+
+        /* ════════════════════════════════════════════════════
+           BANNER 3 — Hard split, site colours, Titillium
+        ════════════════════════════════════════════════════ */
+        .b3 {
+            /* exact website split — hard edge at 50% */
+            background: linear-gradient(90deg, var(--teal) 50%, var(--orange) 50%);
+            font-family: 'Titillium Web', sans-serif;
+        }
+
+        /* dot grid matching the website */
+        .b3::before {
+            content: ''; position: absolute; inset: 0;
+            background-image: radial-gradient(circle, rgba(255,255,255,.18) 1px, transparent 1px);
+            background-size: 28px 28px;
+            pointer-events: none; z-index: 0;
+        }
+
+        .b3-inner {
+            position: absolute; inset: 0; z-index: 1;
+            display: flex; align-items: stretch;
+        }
+
+        /* each brand half — fills exactly 50% */
+        .b3-brand {
+            flex: 1; display: flex; align-items: center; gap: 36px;
+            padding: 0 64px;
+            color: white;
+            font-family: 'Titillium Web', sans-serif;
+        }
+        .b3-brand:last-child {
+            border-left: 2px solid rgba(255,255,255,.25);
+        }
+
+        /* beeldmerk image — already circular, no extra wrapper needed */
+        .b3-brand .bmark {
+            width: 130px; height: 130px; flex-shrink: 0; display: block;
+        }
+
+        .b3-brand .brand-text { flex: 1; }
+
+        /* white frosted pill for logo so real colours show on solid bg */
+        .b3-brand .logo-pill {
+            background: rgba(255,255,255,.90);
+            border-radius: 10px; padding: 9px 18px;
+            display: inline-flex; margin-bottom: 20px;
+        }
+        .b3-brand .brand-logo {
+            height: 46px; width: auto; max-width: 210px;
+            object-fit: contain; display: block;
+        }
+
+        .b3-brand .brand-title {
+            font-family: 'Titillium Web', sans-serif;
+            font-size: 28px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; margin-bottom: 10px; color: white;
+        }
+        .b3-brand .brand-sub {
+            font-family: 'Titillium Web', sans-serif;
+            font-size: 14px; font-weight: 300; color: rgba(255,255,255,.90); line-height: 1.8;
+        }
+
+        .b3 .url {
+            position: absolute; bottom: 20px; right: 64px;
+            font-family: 'Titillium Web', sans-serif;
+            font-size: 12px; font-weight: 600; color: rgba(255,255,255,.55);
+            letter-spacing: 1px; z-index: 2;
+        }
+
+
+        /* ════════════════════════════════════════════════════
+           BANNER 4 — Both brands, dark navy, service strip
+           Real logos, both beeldmerks, updated services
+        ════════════════════════════════════════════════════ */
+        .b4 {
+            background: linear-gradient(110deg, #1a2e35 0%, #22373f 50%, #1a2e35 100%);
+        }
+        .b4::before {
+            content: ''; position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse 45% 100% at 15% 50%, rgba(41,171,164,.20) 0%, transparent 65%),
+                radial-gradient(ellipse 45% 100% at 85% 50%, rgba(247,148,29,.18) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .b4-inner {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 60px; /* leave room for strip */
+            display: flex; align-items: center;
+            padding: 0 70px; gap: 0;
+        }
+
+        /* each brand half */
+        .b4-brand {
+            flex: 1; display: flex; align-items: center; gap: 36px;
+            padding: 0 50px; color: white;
+        }
+        .b4-brand:first-child { padding-left: 0; }
+        .b4-brand:last-child  { border-left: 1px solid rgba(255,255,255,.15); }
+
+        /* beeldmerk — just the image, already circular */
+        .b4-brand .bmark { width: 120px; height: 120px; flex-shrink: 0; display: block; }
+
+        .b4-brand .brand-text { flex: 1; }
+        .b4-brand .brand-eyebrow {
+            font-size: 10px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 3px; margin-bottom: 6px;
+        }
+        .b4-brand:first-child .brand-eyebrow { color: var(--teal); }
+        .b4-brand:last-child  .brand-eyebrow { color: var(--orange); }
+
+        .b4-brand .brand-title {
+            font-size: 32px; font-weight: 900; text-transform: uppercase;
+            line-height: 1.05; letter-spacing: -1px; margin-bottom: 10px;
+        }
+        .b4-brand:first-child .brand-title { color: white; }
+        .b4-brand:last-child  .brand-title span { color: var(--orange); }
+
+        .b4-brand .brand-sub {
+            font-size: 13px; font-weight: 300; color: rgba(255,255,255,.78); line-height: 1.6;
+        }
+        .b4-brand .brand-logo { height: 38px; width: auto; margin-top: 14px; filter: brightness(0) invert(1); opacity: .80; }
+
+        /* service strip */
+        .b4-strip {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            display: flex; border-top: 1px solid rgba(255,255,255,.10);
+            height: 60px;
+        }
+        .b4-item {
+            flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;
+            font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px;
+            color: rgba(255,255,255,.60);
+            border-right: 1px solid rgba(255,255,255,.08);
+        }
+        .b4-item:last-child { border-right: none; }
+        .b4-item.t::before { content: '◆'; color: var(--teal);   font-size: 8px; flex-shrink: 0; }
+        .b4-item.o::before { content: '◆'; color: var(--orange); font-size: 8px; flex-shrink: 0; }
+
+        .b4 .url {
+            position: absolute; top: 18px; right: 70px;
+            font-size: 12px; font-weight: 600; color: rgba(255,255,255,.35);
+            letter-spacing: 1px;
+        }
+
+
+        /* page note */
+        .hint { font-size: 13px; color: #777; text-align: center; margin: 0; }
+    </style>
+</head>
+<body>
+
+    <p class="hint">Each banner is exactly 1584 × 396 px — screenshot at 100% browser zoom for native LinkedIn resolution.</p>
+
+    <!-- ══ BANNER 1 ══ -->
+    <div class="banner-wrap">
+        <div class="banner-label">Option 1 — Classic Split (real colours)</div>
+        <div class="banner b1">
+
+            <!-- watermarks: teal mark centred in left col, orange mark centred in right col -->
+            <div class="b1-wm b1-wm-left" ><img src="beeldmerk2.png" alt=""></div>
+            <div class="b1-wm b1-wm-right"><img src="beeldmerk1.png" alt=""></div>
+
+            <div class="b1-inner">
+                <div class="b1-col">
+                    <div class="logo-pill">
+                        <img class="logo-img" src="medwave-clinical-research.png" alt="Medwave Clinical Research">
+                    </div>
+                    <div class="col-title">Clinical Research</div>
+                    <div class="col-list">
+                        Oncology &amp; Cardiology<br>
+                        Investigator-Initiated Studies<br>
+                        Clinical Trial Unit Support
+                    </div>
+                </div>
+                <div class="b1-divider"></div>
+                <div class="b1-col">
+                    <div class="logo-pill">
+                        <img class="logo-img" src="medwave-medical-imaging.png" alt="Medwave Medical Imaging">
+                    </div>
+                    <div class="col-title">Medical Imaging</div>
+                    <div class="col-list">
+                        Central Image Repository<br>
+                        Tumor Response Training<br>
+                        Advanced Medical Imaging
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ BANNER 2 ══ -->
+    <div class="banner-wrap">
+        <div class="banner-label">Option 2 — Light, Dual Logo, Pills</div>
+        <div class="banner b2">
+
+            <!-- teal mark LEFT, orange mark RIGHT, both vertically centred -->
+            <div class="b2-mark-left" ><img src="beeldmerk2.png" alt=""></div>
+            <div class="b2-mark-right"><img src="beeldmerk1.png" alt=""></div>
+
+            <div class="b2-bar-top"></div>
+            <div class="b2-bar-bottom"></div>
+
+            <div class="b2-inner">
+                <div class="logos-row">
+                    <div class="logo-pill"><img class="logo-img" src="medwave-clinical-research.png" alt="Clinical Research"></div>
+                    <div class="logo-sep"></div>
+                    <div class="logo-pill"><img class="logo-img" src="medwave-medical-imaging.png" alt="Medical Imaging"></div>
+                </div>
+                <div class="tagline">
+                    <em>Set course</em> for exceptional study conduct &nbsp;·&nbsp;
+                    <em class="org">True headings</em> for your imaging endpoint
+                </div>
+                <div class="pills">
+                    <div class="pill pill-teal">Clinical Research</div>
+                    <div class="pill pill-orange">Medical Imaging</div>
+                    <div class="pill pill-teal">Neuro-oncology</div>
+                    <div class="pill pill-orange">Cardiology</div>
+                    <div class="pill pill-orange">Tumor Response</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ BANNER 3 ══ -->
+    <div class="banner-wrap">
+        <div class="banner-label">Option 3 — Both Brands, Teal Gradient</div>
+        <div class="banner b3">
+            <div class="b3-inner">
+
+                <!-- Clinical Research side -->
+                <div class="b3-brand">
+                    <img class="bmark" src="beeldmerk2.png" alt="">
+                    <div class="brand-text">
+                        <div class="logo-pill">
+                            <img class="brand-logo" src="medwave-clinical-research.png" alt="">
+                        </div>
+                        <div class="brand-sub">
+                            Oncology &amp; Cardiology<br>
+                            Investigator-Initiated Studies<br>
+                            Clinical Trial Unit Support
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Medical Imaging side -->
+                <div class="b3-brand">
+                    <img class="bmark" src="beeldmerk1.png" alt="">
+                    <div class="brand-text">
+                        <div class="logo-pill">
+                            <img class="brand-logo" src="medwave-medical-imaging.png" alt="">
+                        </div>
+                        <div class="brand-sub">
+                            Central Image Repository<br>
+                            Tumor Response Training<br>
+                            Advanced Medical Imaging
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="url">medwave.nl</div>
+        </div>
+    </div>
+
+    <!-- ══ BANNER 4 ══ -->
+    <div class="banner-wrap">
+        <div class="banner-label">Option 4 — Both Brands, Dark Navy</div>
+        <div class="banner b4">
+
+            <div class="url">medwave.nl</div>
+
+            <div class="b4-inner">
+
+                <!-- Clinical Research -->
+                <div class="b4-brand">
+                    <img class="bmark" src="beeldmerk2.png" alt="">
+                    <div class="brand-text">
+                        <div class="brand-eyebrow">Medwave</div>
+                        <div class="brand-title">Clinical<br>Research</div>
+                        <div class="brand-sub">
+                            Oncology · Cardiology<br>
+                            Investigator-Initiated Studies<br>
+                            Clinical Trial Unit Support
+                        </div>
+                        <img class="brand-logo" src="medwave-clinical-research.png" alt="">
+                    </div>
+                </div>
+
+                <!-- Medical Imaging -->
+                <div class="b4-brand">
+                    <img class="bmark" src="beeldmerk1.png" alt="">
+                    <div class="brand-text">
+                        <div class="brand-eyebrow">Medwave</div>
+                        <div class="brand-title">Medical<br><span>Imaging</span></div>
+                        <div class="brand-sub">
+                            Central Image Repository<br>
+                            Tumor Response Training<br>
+                            Advanced Medical Imaging
+                        </div>
+                        <img class="brand-logo" src="medwave-medical-imaging.png" alt="">
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- service strip -->
+            <div class="b4-strip">
+                <div class="b4-item t">Clinical Operations</div>
+                <div class="b4-item t">Oncology Trials</div>
+                <div class="b4-item t">IIS Full Service</div>
+                <div class="b4-item o">Central Image Repository</div>
+                <div class="b4-item o">Tumor Response Training</div>
+                <div class="b4-item o">Advanced Imaging</div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

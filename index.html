@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medwave | Clinical Research & Imaging</title>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- 1. VARIABLES --- */
+        :root {
+            --col-top-bar: #2b96bc;
+            --teal: #29aba4;
+            --orange: #f7941d;
+            --col-footer: #29aba4;
+            --bg-grey-light: #f4f6f8;
+            --text-dark: #333333;
+            --page-padding: 60px;
+        }
+
+        /* --- 2. BASE RESET & BACKGROUNDS --- */
+        html { scroll-behavior: smooth; height: 100%; }
+
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Titillium Web', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            display: flex; flex-direction: column; min-height: 100vh;
+            background-color: #f9fbfb;
+            background-image:
+                radial-gradient(circle, #d1e8e6 0.5px, transparent 3px),
+                linear-gradient(180deg, #e0f2f1 0%, #f9fbfb 100%);
+            background-size: 40px 40px, auto;
+            background-position: 0 0, 0 0;
+        }
+
+        *, *:before, *:after { box-sizing: border-box; }
+        ul { list-style: none; margin: 0; padding: 0; }
+
+        /* --- 3. BACKGROUND EFFECTS --- */
+        .background-fx-layer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none; overflow: hidden;
+        }
+        .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.3; }
+        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--teal); }
+        .blob-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: var(--orange); }
+
+        /* --- 4. TOP BAR & MENU --- */
+        .top-bar {
+            background-color: var(--col-top-bar);
+            height: 50px;
+            position: relative; z-index: 2000;
+        }
+        .top-bar-inner {
+            max-width: 1300px; margin: 0 auto; padding: 0 var(--page-padding);
+            height: 100%; display: flex; align-items: center;
+        }
+
+        .main-menu { display: flex; height: 100%; align-items: center; gap: 10px; margin-right: auto; }
+        .menu-item { position: relative; height: 100%; display: flex; align-items: center; }
+
+        .menu-link {
+            color: rgba(255, 255, 255, 0.95); text-decoration: none;
+            font-size: 13px; font-weight: 600; text-transform: uppercase;
+            transition: all 0.3s ease; position: relative; padding: 15px 15px; display: block;
+        }
+        .menu-link:hover { color: #fff; background-color: rgba(255, 255, 255, 0.1); border-radius: 4px; }
+        .menu-link::after { content: ''; position: absolute; width: 0; height: 3px; bottom: 0; left: 15px; background-color: var(--orange); transition: width 0.3s; }
+        .menu-item:hover .menu-link::after { width: calc(100% - 30px); }
+
+        .dropdown-menu {
+            display: none; position: absolute; top: 100%; left: 0;
+            background-color: rgba(37, 174, 166, 0.6); min-width: 220px;
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(255, 255, 255, 0.4);
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2); padding: 10px 0; z-index: 2001;
+        }
+        .menu-item:hover .dropdown-menu { display: block; }
+        .dropdown-menu a { color: white; text-decoration: none; display: block; padding: 12px 20px; font-size: 13px; font-weight: 600; text-transform: uppercase; transition: 0.2s; border-bottom: 1px solid rgba(255,255,255,0.15); text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+        .dropdown-menu li:last-child a { border-bottom: none; }
+        .dropdown-menu a:hover { background-color: rgba(255,255,255,0.2); color: white; padding-left: 25px; box-shadow: inset 0 0 10px rgba(255,255,255,0.1); }
+
+        /* MENU TOGGLE & OVERLAY */
+        #menu-toggle { display: none; }
+        .menu-icon { display: none; font-size: 24px; color: white; cursor: pointer; margin-left: auto; z-index: 2002; position: relative; }
+        .menu-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: transparent; z-index: 2000;
+        }
+
+        /* --- 5. HEADER LOGOS --- */
+        .header-logo-wrapper { background: transparent; position: relative; z-index: 5; max-width: 1300px; margin: 0 auto; width: 100%; }
+        .main-split-container { display: flex; width: 100%; }
+        .split-column { flex: 1; display: flex; flex-direction: column; position: relative; }
+        .header-logo-wrapper { min-height: 160px; display: flex; align-items: stretch; }
+        .header-logo-wrapper .main-split-container { align-items: center; }
+        .column-header {
+            padding: 36px var(--page-padding);
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex: 1;
+        }
+
+        .logo-placeholder { display: flex; align-items: center; gap: 15px; font-weight: 700; font-size: 32px; line-height: 1; }
+        .logo-text-col { display: flex; flex-direction: column; }
+        .logo-main { letter-spacing: -1px; }
+        .logo-sub { font-size: 13px; letter-spacing: 2px; font-weight: 600; margin-top: 2px; text-transform: uppercase; color: #999; }
+        .logo-teal .logo-main { color: var(--teal); }
+        .logo-orange .logo-main { color: var(--orange); }
+        .logo-placeholder img { width: 250px; height: auto; display: block; }
+
+        /* --- 6. CONTENT BLOCK --- */
+        .content-block-outer {
+            width: 100%; position: relative; z-index: 10;
+            background: linear-gradient(90deg, var(--teal) 50%, var(--orange) 50%);
+            /* straight block — no wave mask */
+        }
+
+        .content-inner-flex { display: flex; width: 100%; }
+        .column-content {
+            flex: 1; padding: 70px var(--page-padding) 70px;
+            color: white; display: flex; flex-direction: column; justify-content: center; min-height: 500px;
+        }
+        .split-column:first-child .column-content {
+            padding-left: max(var(--page-padding), calc((100vw - 1300px) / 2 + var(--page-padding)));
+        }
+        .split-column:last-child .column-content {
+            padding-right: max(var(--page-padding), calc((100vw - 1300px) / 2 + var(--page-padding)));
+        }
+        .column-content h2 { font-size: 28px; text-transform: uppercase; margin: 0 0 20px 0; font-weight: 700; }
+
+        ul.check-list { list-style: none; padding: 0; margin-bottom: 40px; }
+        ul.check-list li { position: relative; padding-left: 25px; margin-bottom: 10px; font-size: 16px; }
+        ul.check-list li::before { content: "◆"; position: absolute; left: 0; top: 5px; font-size: 12px; opacity: 0.7; }
+
+        .btn { display: inline-block; background: white; padding: 12px 30px; font-size: 13px; font-weight: 700; text-transform: uppercase; text-decoration: none; border-radius: 4px; transition: transform 0.2s, box-shadow 0.2s; align-self: flex-start; }
+        .text-teal { color: var(--teal); } .text-orange { color: var(--orange); }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
+
+
+        /* --- 7. MOBILE & TABLET --- */
+        @media (max-width: 1024px) {
+            :root { --page-padding: 30px; }
+            .top-bar { justify-content: space-between; padding: 0 20px; }
+            .menu-icon { display: block; }
+
+            .main-menu {
+                display: none; flex-direction: column; position: absolute; top: 50px; right: 0;
+                width: max-content; min-width: 160px; height: auto; gap: 0;
+                background-color: rgba(247, 148, 29, 0.85);
+                backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+                border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;
+                padding: 10px 0; box-shadow: 0 10px 20px rgba(0,0,0,0.2); z-index: 2001;
+            }
+            #menu-toggle:checked ~ .main-menu { display: flex; }
+            #menu-toggle:checked ~ .menu-overlay { display: block; }
+
+            .menu-item { width: 100%; flex-direction: column; align-items: stretch; height: auto; }
+            .menu-link { width: 100%; padding: 10px 25px 10px 20px; text-align: right; border-bottom: 1px solid rgba(255,255,255,0.1); white-space: nowrap; text-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+            .menu-link::after { display: none; }
+            .menu-item.dropdown > .menu-link::before { content: '◄'; position: absolute; left: 15px; font-size: 10px; opacity: 0.7; top: 14px; }
+            .menu-link:hover { background-color: rgba(255, 255, 255, 0.1); box-shadow: inset 4px 0 0 0 var(--teal); padding-left: 20px; border-radius: 0; }
+            .dropdown-menu { top: 0; left: auto; right: 100%; margin-right: 0; width: max-content; min-width: 180px; border-radius: 10px; background-color: rgba(247, 148, 29, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.2); padding: 5px 0; }
+            .dropdown-menu::after { content: ''; position: absolute; top: 0; right: -20px; height: 100%; width: 20px; background: transparent; }
+            .dropdown-menu a { text-align: right; padding: 8px 25px 8px 20px; white-space: nowrap; text-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+            .dropdown-menu a:hover { background-color: rgba(255,255,255,0.15); color: white; }
+
+            .header-logo-wrapper { margin-bottom: 40px; }
+            .header-logo-wrapper .main-split-container { flex-direction: row; }
+            .header-logo-wrapper .split-column { width: 50%; }
+            .column-header { padding: 30px 10px; justify-content: center; }
+
+            .logo-placeholder { font-size: clamp(16px, 3.5vw, 24px); gap: clamp(5px, 1.5vw, 10px); }
+            .logo-placeholder img { width: clamp(150px, 22vw, 300px); height: auto; }
+            .logo-sub { font-size: 8px; }
+
+            .content-block-outer { background: none; -webkit-mask-image: none; mask-image: none; }
+            .content-inner-flex { flex-direction: column; }
+
+            .split-column:first-child .column-content { background-color: var(--teal); padding: 50px 30px; }
+            .split-column:last-child .column-content { background-color: var(--orange); padding: 50px 30px; }
+
+            .column-content h2 { text-align: center; }
+            ul.check-list { text-align: center; display: block; padding: 0 10px; }
+            ul.check-list li { padding-left: 0; margin-bottom: 12px; }
+            ul.check-list li::before { position: relative; left: auto; top: auto; display: inline-block; margin-right: 8px; }
+            .btn { align-self: center !important; margin-top: 20px; }
+        }
+
+        /* --- 8. FOOTER --- */
+        .page-spacer { flex-grow: 1; }
+        .footer-wrapper { margin-top: auto; }
+        footer { background-color: var(--col-footer); color: white; text-align: center; padding: 30px 20px; font-size: 13px; }
+    </style>
+</head>
+<body>
+    <div class="background-fx-layer">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="top-bar">
+        <div class="top-bar-inner">
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="menu-icon">&#9776;</label>
+        <label for="menu-toggle" class="menu-overlay"></label>
+
+        <ul class="main-menu">
+            <li class="menu-item"><a href="index.html" class="menu-link">Home</a></li>
+            <li class="menu-item dropdown">
+                <a href="clinical-research/clinical-operations.html" class="menu-link">Clinical Research</a>
+                <ul class="dropdown-menu">
+                    <li><a href="clinical-research/clinical-operations.html">Clinical Operations</a></li>
+                    <li><a href="clinical-research/oncology.html">Oncology</a></li>
+                    <li><a href="clinical-research/cardiology.html">Cardiology</a></li>
+                    <li><a href="clinical-research/investigator-initiated-studies.html">Investigator Initiated Studies</a></li>
+                    <li><a href="clinical-research/clinical-trial-unit-support.html">Clinical Trial Unit Support</a></li>
+                </ul>
+            </li>
+            <li class="menu-item dropdown">
+                <a href="medical-imaging/central-image-repository.html" class="menu-link">Medical Imaging</a>
+                <ul class="dropdown-menu">
+                    <li><a href="medical-imaging/central-image-repository.html">Central Image Repository</a></li>
+                    <li><a href="medical-imaging/central-imaging-in-oncology.html">Central Imaging in Oncology</a></li>
+                    <li><a href="medical-imaging/central-imaging-in-cardiology.html">Central Imaging in Cardiology</a></li>
+                    <li><a href="medical-imaging/tumor-response-training.html">Tumor Response Training</a></li>
+                    <li><a href="medical-imaging/central-dosimetry-for-theranostics.html">Central Dosimetry for Theranostics</a></li>
+                    <li><a href="medical-imaging/post-processing-perfusion-mri.html">Post-processing Perfusion MRI</a></li>
+                </ul>
+            </li>
+            <li class="menu-item dropdown">
+                <a href="about/our-story.html" class="menu-link">About</a>
+                <ul class="dropdown-menu">
+                    <li><a href="about/our-story.html">About</a></li>
+                    <li><a href="about/core-team.html">Core Team</a></li>
+                    <li><a href="about/joining-medwave.html">Joining Medwave</a></li>
+                    <li><a href="about/experiences.html">Experiences</a></li>
+                </ul>
+            </li>
+            <li class="menu-item"><a href="contact.html" class="menu-link">Contact</a></li>
+        </ul>
+        </div>
+    </div>
+
+    <div class="header-logo-wrapper">
+        <div class="main-split-container">
+            <div class="split-column">
+                <div class="column-header">
+                    <div class="logo-placeholder logo-teal">
+                        <img src="medwave-clinical-research.png" alt="Clinical Research Logo">
+                    </div>
+                </div>
+            </div>
+            <div class="split-column">
+                <div class="column-header">
+                    <div class="logo-placeholder logo-orange">
+                        <img src="medwave-medical-imaging.png" alt="Medical Imaging Logo">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-block-outer">
+        <div class="content-inner-flex">
+            <div class="split-column">
+                <div class="column-content">
+                    <h2>Medwave Clinical Research</h2>
+                    <ul class="check-list">
+                        <li>Dedicated to Oncology and Cardiology research.</li>
+                        <li>Full service clinical trial concept for Investigator-Initiated-Studies.</li>
+                        <li>Tailor made trial support for Biotech firms.</li>
+                        <li>Temporarily staffing for in-hospital Trial Units.</li>
+                    </ul>
+                    <a href="clinical-research/clinical-operations.html" class="btn text-teal">Explore Services</a>
+                </div>
+            </div>
+            <div class="split-column">
+                <div class="column-content">
+                    <h2>Medwave Medical Imaging</h2>
+                    <ul class="check-list">
+                        <li>Central image repository &amp; Imaging Review.</li>
+                        <li>Post-processing DCE-MRI and DSC-MRI.</li>
+                        <li>Dosimetry assessments for Theranostics.</li>
+                        <li>Tumor imaging and tumor response trainings.</li>
+                    </ul>
+                    <a href="#contact" class="btn text-orange">Get in Touch</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-spacer"></div>
+
+    <div class="footer-wrapper">
+        <footer>
+            &copy; 2025 Medwave &nbsp;|&nbsp; <a href="mailto:info@medwave.nl" style="color:white;">info@medwave.nl</a>
+        </footer>
+    </div>
+</body>
+</html>

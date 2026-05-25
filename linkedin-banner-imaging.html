@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medwave Medical Imaging — LinkedIn Banners</title>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --teal:   #29aba4;
+            --orange: #f7941d;
+            --navy:   #1a2e35;
+            --blue:   #2b96bc;
+        }
+
+        body {
+            margin: 0; padding: 40px;
+            background: #d0d5db;
+            font-family: 'Titillium Web', sans-serif;
+            display: flex; flex-direction: column; gap: 52px; align-items: center;
+        }
+
+        .banner-wrap { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; width: 1584px; }
+        .banner-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #555; }
+
+        .banner {
+            width: 1584px; height: 396px;
+            position: relative; overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 8px 40px rgba(0,0,0,.22);
+            font-family: 'Titillium Web', sans-serif;
+        }
+
+        /* ════════════════════════════════════════════════════
+           BANNER A — Dark navy, large beeldmerk, bold orange
+        ════════════════════════════════════════════════════ */
+        .ba {
+            background: linear-gradient(110deg, #1a2e35 0%, #1e3840 55%, #1a2e35 100%);
+        }
+
+        /* orange glow emanating from the beeldmerk side */
+        .ba::before {
+            content: ''; position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse 60% 120% at 18% 50%, rgba(247,148,29,.22) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 80%  at 85% 50%, rgba(41,171,164,.12) 0%, transparent 55%);
+            pointer-events: none;
+        }
+
+        /* dot grid */
+        .ba::after {
+            content: ''; position: absolute; inset: 0;
+            background-image: radial-gradient(circle, rgba(255,255,255,.06) 1px, transparent 1px);
+            background-size: 28px 28px;
+            pointer-events: none;
+        }
+
+        /* large beeldmerk — left side, partially off-canvas for drama */
+        .ba-mark {
+            position: absolute;
+            left: -30px; top: 50%;
+            transform: translateY(-50%);
+            width: 380px; height: 380px;
+            z-index: 1;
+            filter: drop-shadow(0 0 40px rgba(247,148,29,.25));
+        }
+
+        .ba-inner {
+            position: absolute; inset: 0; z-index: 2;
+            display: flex; align-items: center;
+            padding: 0 72px 0 390px; /* clear the beeldmerk */
+            gap: 0;
+        }
+
+        /* vertical orange divider */
+        .ba-divider {
+            width: 3px; height: 220px; flex-shrink: 0;
+            background: linear-gradient(to bottom, transparent, var(--orange), transparent);
+            margin-right: 64px;
+        }
+
+        .ba-text { flex: 1; color: white; }
+
+        /* white pill for logo */
+        .ba .logo-pill {
+            background: rgba(255,255,255,.92);
+            border-radius: 10px; padding: 10px 22px;
+            display: inline-flex; margin-bottom: 26px;
+        }
+        .ba .logo-pill img {
+            height: 52px; width: auto; max-width: 260px;
+            object-fit: contain; display: block;
+        }
+
+        .ba .tagline {
+            font-size: 20px; font-weight: 300;
+            color: rgba(255,255,255,.85); line-height: 1.5;
+            margin-bottom: 28px;
+        }
+        .ba .tagline strong { font-weight: 700; color: white; }
+
+        .ba .services {
+            display: flex; flex-direction: column; gap: 8px;
+        }
+        .ba .svc {
+            display: flex; align-items: center; gap: 12px;
+            font-size: 15px; font-weight: 400; color: rgba(255,255,255,.80);
+        }
+        .ba .svc::before {
+            content: ''; display: block; flex-shrink: 0;
+            width: 18px; height: 2px; background: var(--orange);
+            border-radius: 2px;
+        }
+
+        .ba .url {
+            position: absolute; bottom: 22px; right: 72px;
+            font-size: 12px; font-weight: 600;
+            color: rgba(255,255,255,.35); letter-spacing: 1px;
+        }
+
+
+        /* ════════════════════════════════════════════════════
+           BANNER B — Website split style, navy | orange
+        ════════════════════════════════════════════════════ */
+        .bb {
+            background: linear-gradient(90deg, var(--navy) 50%, var(--orange) 50%);
+            font-family: 'Titillium Web', sans-serif;
+        }
+
+        /* dot grid */
+        .bb::before {
+            content: ''; position: absolute; inset: 0;
+            background-image: radial-gradient(circle, rgba(255,255,255,.10) 1px, transparent 1px);
+            background-size: 28px 28px;
+            pointer-events: none; z-index: 0;
+        }
+
+        /* large watermark beeldmerk — centred, spans the split */
+        .bb-wm {
+            position: absolute; left: 50%; top: 50%;
+            transform: translate(-50%, -50%);
+            width: 340px; height: 340px;
+            opacity: .08; pointer-events: none; z-index: 0;
+        }
+
+        .bb-inner {
+            position: absolute; inset: 0; z-index: 1;
+            display: flex; align-items: stretch;
+        }
+
+        /* left dark half — logo + tagline */
+        .bb-left {
+            flex: 1; display: flex; flex-direction: column;
+            justify-content: center; padding: 0 72px;
+            color: white;
+        }
+
+        .bb .logo-pill {
+            background: rgba(255,255,255,.92);
+            border-radius: 10px; padding: 10px 22px;
+            display: inline-flex; margin-bottom: 28px; align-self: flex-start;
+        }
+        .bb .logo-pill img {
+            height: 52px; width: auto; max-width: 260px;
+            object-fit: contain; display: block;
+        }
+
+        .bb-left .tagline {
+            font-size: 18px; font-weight: 300;
+            color: rgba(255,255,255,.85); line-height: 1.6;
+        }
+        .bb-left .tagline em { font-style: normal; font-weight: 700; color: var(--teal); }
+
+        /* divider */
+        .bb-divider {
+            width: 2px; flex-shrink: 0; margin: 40px 0;
+            background: rgba(255,255,255,.25);
+        }
+
+        /* right orange half — services */
+        .bb-right {
+            flex: 1; display: flex; flex-direction: column;
+            justify-content: center; padding: 0 72px;
+            color: white; align-items: flex-start;
+        }
+
+        .bb-right .section-label {
+            font-size: 11px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 3px; color: rgba(255,255,255,.65);
+            margin-bottom: 20px;
+        }
+
+        .bb-right .services {
+            display: flex; flex-direction: column; gap: 10px; width: 100%;
+        }
+        .bb-right .svc {
+            display: flex; align-items: center; gap: 14px;
+            font-size: 16px; font-weight: 400; color: rgba(255,255,255,.92);
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,.18);
+        }
+        .bb-right .svc:last-child { border-bottom: none; padding-bottom: 0; }
+        .bb-right .svc::before {
+            content: '◆'; font-size: 10px;
+            color: rgba(255,255,255,.60); flex-shrink: 0;
+        }
+
+        .bb .url {
+            position: absolute; bottom: 22px; right: 72px;
+            font-size: 12px; font-weight: 600;
+            color: rgba(255,255,255,.45); letter-spacing: 1px;
+        }
+
+
+        /* ════════════════════════════════════════════════════
+           BANNER C — Bold orange gradient, minimal
+        ════════════════════════════════════════════════════ */
+        .bc {
+            background: linear-gradient(120deg, #e07010 0%, var(--orange) 40%, #f0a040 70%, #e07010 100%);
+            font-family: 'Titillium Web', sans-serif;
+        }
+
+        /* dot grid */
+        .bc::before {
+            content: ''; position: absolute; inset: 0;
+            background-image: radial-gradient(circle, rgba(255,255,255,.15) 1px, transparent 1px);
+            background-size: 28px 28px;
+            pointer-events: none; z-index: 0;
+        }
+
+        /* large beeldmerk watermark right side */
+        .bc-wm {
+            position: absolute; right: 120px; top: 50%;
+            transform: translateY(-50%);
+            width: 360px; height: 360px;
+            opacity: .18; pointer-events: none; z-index: 0;
+        }
+
+        .bc-inner {
+            position: absolute; inset: 0; z-index: 1;
+            display: flex; align-items: center;
+            /* left padding clears the LinkedIn profile-photo circle (~300 px) */
+            padding: 0 140px 0 380px;
+        }
+
+        .bc-text { color: white; flex: 1; }
+
+        .bc .logo-pill {
+            background: rgba(255,255,255,.92);
+            border-radius: 10px; padding: 10px 22px;
+            display: inline-flex; margin-bottom: 22px;
+        }
+        .bc .logo-pill img {
+            height: 52px; width: auto; max-width: 260px;
+            object-fit: contain; display: block;
+        }
+
+        .bc .headline {
+            font-size: 40px; font-weight: 900; text-transform: uppercase;
+            letter-spacing: -1px; color: white; margin-bottom: 0;
+            text-shadow: 0 2px 12px rgba(0,0,0,.15);
+        }
+        .bc .sub {
+            font-size: 17px; font-weight: 300;
+            color: rgba(255,255,255,.90); line-height: 1.65;
+        }
+
+        /* service pills row */
+        .bc .spills {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            display: flex; border-top: 1px solid rgba(255,255,255,.25);
+        }
+        .bc .spill {
+            flex: 1; padding: 14px 0; text-align: center;
+            font-size: 12px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: .5px; color: rgba(255,255,255,.80);
+            border-right: 1px solid rgba(255,255,255,.20);
+        }
+        .bc .spill:last-child { border-right: none; }
+
+        .bc .url {
+            position: absolute; top: 20px; right: 100px;
+            font-size: 12px; font-weight: 600;
+            color: rgba(255,255,255,.50); letter-spacing: 1px;
+        }
+
+        /* ════════════════════════════════════════════════════
+           BANNER E — Clean light background, full-colour logo
+        ════════════════════════════════════════════════════ */
+        .be {
+            background: linear-gradient(130deg, #eef5f7 0%, #f5fafb 55%, #eaf4f4 100%);
+            font-family: 'Titillium Web', sans-serif;
+        }
+
+        /* teal dot grid on light bg */
+        .be::before {
+            content: ''; position: absolute; inset: 0;
+            background-image: radial-gradient(circle, rgba(41,171,164,.15) 1px, transparent 1px);
+            background-size: 28px 28px;
+            pointer-events: none; z-index: 0;
+        }
+
+        /* orange → teal gradient accent bar along the top */
+        .be::after {
+            content: ''; position: absolute;
+            top: 0; left: 0; right: 0; height: 6px;
+            background: linear-gradient(90deg, var(--orange) 0%, var(--teal) 100%);
+            pointer-events: none; z-index: 3;
+        }
+
+        /* watermark beeldmerk — centred in the left half (left half = 0–792px, centre at 396px) */
+        .be-wm {
+            position: absolute; left: 216px; top: 50%;
+            transform: translateY(-50%);
+            width: 360px; height: 360px;
+            opacity: .13; pointer-events: none; z-index: 0;
+        }
+
+        /* content pushed to the right */
+        .be-inner {
+            position: absolute; inset: 0; z-index: 2;
+            display: flex; align-items: center;
+            justify-content: flex-end;
+            padding: 0 130px;
+        }
+
+        .be-content {
+            display: flex; flex-direction: column;
+            align-items: flex-start;
+            max-width: 740px;
+        }
+
+        /* logo displayed directly — no pill needed on light bg */
+        .be-logo {
+            height: 100px; width: auto; max-width: 540px;
+            object-fit: contain; display: block;
+            margin-bottom: 22px;
+        }
+
+        /* short teal rule between logo and tagline */
+        .be-rule {
+            width: 56px; height: 3px;
+            background: var(--orange);
+            border-radius: 2px; margin-bottom: 18px;
+        }
+
+        .be-tagline {
+            font-size: 21px; font-weight: 300;
+            color: var(--navy); letter-spacing: .2px; line-height: 1.5;
+        }
+        .be-tagline strong { font-weight: 700; color: var(--teal); }
+
+        .be .url {
+            position: absolute; bottom: 18px; right: 130px;
+            font-size: 12px; font-weight: 600;
+            color: rgba(26,46,53,.28); letter-spacing: 1px;
+        }
+
+        /* ════════════════════════════════════════════════════
+           BANNER F — Orange background, large logo in white pill, right-aligned
+        ════════════════════════════════════════════════════ */
+        .bf {
+            background: linear-gradient(120deg, #e07010 0%, var(--orange) 40%, #f0a040 70%, #e07010 100%);
+            font-family: 'Titillium Web', sans-serif;
+        }
+
+        /* dot grid */
+        .bf::before {
+            content: ''; position: absolute; inset: 0;
+            background-image: radial-gradient(circle, rgba(255,255,255,.15) 1px, transparent 1px);
+            background-size: 28px 28px;
+            pointer-events: none; z-index: 0;
+        }
+
+        .bf-inner {
+            position: absolute; inset: 0; z-index: 1;
+            display: flex; align-items: center;
+            justify-content: flex-end;
+            padding: 0 130px;
+        }
+
+        .bf-content {
+            display: flex; flex-direction: column;
+            align-items: flex-start;
+            max-width: 740px;
+        }
+
+        /* white frosted pill — logo at E-scale */
+        .bf .logo-pill {
+            background: rgba(255,255,255,.92);
+            border-radius: 12px; padding: 14px 30px;
+            display: inline-flex; margin-bottom: 26px;
+        }
+        .bf .logo-pill img {
+            height: 100px; width: auto; max-width: 540px;
+            object-fit: contain; display: block;
+        }
+
+        .bf-tagline {
+            font-size: 22px; font-weight: 300;
+            color: rgba(255,255,255,.92); line-height: 1.5;
+        }
+        .bf-tagline strong { font-weight: 700; color: white; }
+
+        .bf .url {
+            position: absolute; bottom: 18px; right: 130px;
+            font-size: 12px; font-weight: 600;
+            color: rgba(255,255,255,.45); letter-spacing: 1px;
+        }
+
+        .hint { font-size: 13px; color: #777; text-align: center; margin: 0; }
+
+
+        /* ════════════════════════════════════════════════════
+           BANNER D — Coastal diagonal: warm orange → dark teal
+           (inspired by aerial beach photo; logo large on dark right)
+        ════════════════════════════════════════════════════ */
+        .bd {
+            /* orange-sand on left bleeds into deep teal-navy on right */
+            background: linear-gradient(108deg,
+                #c06012  0%,
+                #e07818 18%,
+                #f09830 30%,
+                #4d7860 46%,
+                #1c4048 57%,
+                #172e38 72%,
+                #101e26 100%
+            );
+            font-family: 'Titillium Web', sans-serif;
+        }
+
+        /* subtle dot grid */
+        .bd::before {
+            content: ''; position: absolute; inset: 0;
+            background-image: radial-gradient(circle, rgba(255,255,255,.07) 1px, transparent 1px);
+            background-size: 28px 28px;
+            pointer-events: none; z-index: 0;
+        }
+
+        /* faint watermark beeldmerk — left orange zone (will sit behind / under profile pic) */
+        .bd-wm {
+            position: absolute; left: 40px; top: 50%;
+            transform: translateY(-50%);
+            width: 300px; height: 300px;
+            opacity: .13; pointer-events: none; z-index: 0;
+            filter: brightness(10); /* turn it white so it's visible on orange */
+        }
+
+        /* all content pushed into the dark-right zone */
+        .bd-inner {
+            position: absolute; inset: 0; z-index: 1;
+            display: flex; align-items: center;
+            justify-content: flex-end;
+            padding: 0 130px;
+        }
+
+        .bd-content {
+            display: flex; flex-direction: column;
+            align-items: flex-start;
+            max-width: 740px;
+        }
+
+        /* logo displayed large, no white pill — drop-shadow lifts it off the dark bg */
+        .bd-logo {
+            height: 104px; width: auto; max-width: 540px;
+            object-fit: contain; display: block;
+            margin-bottom: 26px;
+            filter:
+                drop-shadow(0 2px 18px rgba(0,0,0,.55))
+                drop-shadow(0 0 6px rgba(255,255,255,.12));
+        }
+
+        .bd-tagline {
+            font-size: 22px; font-weight: 400; font-style: italic;
+            color: var(--orange);
+            text-shadow: 0 1px 10px rgba(0,0,0,.50);
+            letter-spacing: .3px;
+        }
+
+        .bd .url {
+            position: absolute; bottom: 18px; right: 130px;
+            font-size: 12px; font-weight: 600;
+            color: rgba(255,255,255,.32); letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <p class="hint">Each banner is 1584 × 396 px — screenshot at 100% browser zoom for native LinkedIn resolution.</p>
+
+    <!-- ══ BANNER A: Dark navy + orange ══ -->
+    <div class="banner-wrap">
+        <div class="banner-label">Option A — Dark Navy</div>
+        <div class="banner ba">
+
+            <img class="ba-mark" src="beeldmerk1.png" alt="">
+
+            <div class="ba-inner">
+                <div class="ba-divider"></div>
+                <div class="ba-text">
+                    <div class="logo-pill">
+                        <img src="medwave-medical-imaging.png" alt="Medwave Medical Imaging">
+                    </div>
+                    <div class="tagline">
+                        <strong>Precision imaging</strong> for clinical trials.<br>
+                        From central repository to advanced post-processing.
+                    </div>
+                    <div class="services">
+                        <div class="svc">Central Image Repository &amp; Imaging Review</div>
+                        <div class="svc">Tumor Response Training &amp; Neuro-oncology</div>
+                        <div class="svc">Advanced Medical Imaging &amp; Post-processing</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="url">medwave.nl</div>
+        </div>
+    </div>
+
+    <!-- ══ BANNER B: Navy | Orange split ══ -->
+    <div class="banner-wrap">
+        <div class="banner-label">Option B — Website Split Style</div>
+        <div class="banner bb">
+
+            <img class="bb-wm" src="beeldmerk1.png" alt="">
+
+            <div class="bb-inner">
+                <div class="bb-left">
+                    <div class="logo-pill">
+                        <img src="medwave-medical-imaging.png" alt="Medwave Medical Imaging">
+                    </div>
+                    <div class="tagline">
+                        <em>"True headings"</em> for your imaging endpoint.<br>
+                        Expert central imaging services for clinical trials.
+                    </div>
+                </div>
+                <div class="bb-divider"></div>
+                <div class="bb-right">
+                    <div class="section-label">Our Services</div>
+                    <div class="services">
+                        <div class="svc">Central Image Repository</div>
+                        <div class="svc">Tumor Response Training</div>
+                        <div class="svc">Neuro-oncology Imaging</div>
+                        <div class="svc">Advanced Medical Imaging</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="url">medwave.nl</div>
+        </div>
+    </div>
+
+    <!-- ══ BANNER C: Bold orange ══ -->
+    <div class="banner-wrap">
+        <div class="banner-label">Option C — Bold Orange</div>
+        <div class="banner bc">
+
+            <img class="bc-wm" src="beeldmerk1.png" alt="">
+
+            <div class="bc-inner">
+                <div class="bc-text">
+                    <div class="logo-pill">
+                        <img src="medwave-medical-imaging.png" alt="Medwave Medical Imaging">
+                    </div>
+                    <div class="headline">Advanced Imaging<br>for Clinical Trials</div>
+                </div>
+            </div>
+
+            <div class="url">medwave.nl</div>
+        </div>
+    </div>
+
+
+    <!-- ══ BANNER F: Orange bg, large logo pill, right-aligned ══ -->
+    <div class="banner-wrap">
+        <div class="banner-label">Option F — Orange, Large Logo Pill</div>
+        <div class="banner bf">
+
+            <div class="bf-inner">
+                <div class="bf-content">
+                    <div class="logo-pill">
+                        <img src="medwave-medical-imaging.png" alt="Medwave Medical Imaging">
+                    </div>
+                    <div class="bf-tagline"><strong>True headings</strong> for your imaging endpoints</div>
+                </div>
+            </div>
+
+            <div class="url">medwave.nl</div>
+        </div>
+    </div>
+
+    <!-- ══ BANNER E: Light / clean ══ -->
+    <div class="banner-wrap">
+        <div class="banner-label">Option E — Light / Clean</div>
+        <div class="banner be">
+
+            <div class="be-inner">
+                <div class="be-content">
+                    <img class="be-logo" src="medwave-medical-imaging.png" alt="Medwave Medical Imaging">
+                    <div class="be-rule"></div>
+                    <div class="be-tagline"><strong>True headings</strong> for your imaging endpoints</div>
+                </div>
+            </div>
+
+            <div class="url">medwave.nl</div>
+        </div>
+    </div>
+
+    <!-- ══ BANNER D: Coastal diagonal — orange left, dark teal right ══ -->
+    <div class="banner-wrap">
+        <div class="banner-label">Option D — Coastal Style (large logo, no pill)</div>
+        <div class="banner bd">
+
+            <!-- faint watermark in the orange left zone -->
+            <img class="bd-wm" src="beeldmerk1.png" alt="">
+
+            <div class="bd-inner">
+                <div class="bd-content">
+                    <img class="bd-logo" src="medwave-medical-imaging.png" alt="Medwave Medical Imaging">
+                    <div class="bd-tagline">True headings for your imaging endpoints</div>
+                </div>
+            </div>
+
+            <div class="url">medwave.nl</div>
+        </div>
+    </div>
+
+</body>
+</html>
