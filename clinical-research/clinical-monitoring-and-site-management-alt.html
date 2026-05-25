@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investigator Initiated Studies | Medwave Clinical Research</title>
+    <title>Clinical Monitoring and Site Management | Medwave Clinical Research</title>
     <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root { --col-top-bar: #2b96bc; --teal: #29aba4; --orange: #f7941d; --text-dark: #333333; --page-padding: 60px; }
@@ -40,17 +40,22 @@
         .page-hero p { font-size: 18px; opacity: 0.9; margin: 0; max-width: 640px; font-weight: 300; }
         .hero-content { max-width: 1300px; margin: 0 auto; padding: 0 var(--page-padding); }
         .page-body { flex: 1; padding: 60px var(--page-padding) 40px; display: grid; grid-template-columns: 1fr 300px; gap: 50px; max-width: 1300px; width: 100%; margin: 0 auto; align-items: start; }
-        .content-main h2 { font-size: 22px; text-transform: uppercase; color: var(--teal); font-weight: 700; margin: 0 0 20px; padding-bottom: 10px; border-bottom: 2px solid var(--teal); }
-        .content-main h3 { font-size: 16px; text-transform: uppercase; color: var(--teal); font-weight: 700; margin: 30px 0 14px; }
-        .content-main p { font-size: 16px; color: #555; margin-bottom: 20px; }
-        .highlight-box { background: white; border-radius: 12px; padding: 28px 30px; border-left: 5px solid var(--teal); box-shadow: 0 4px 20px rgba(41,171,164,0.1); margin-bottom: 30px; }
-        .highlight-box p { margin: 0; font-size: 16px; color: #444; font-style: italic; line-height: 1.7; }
-        .pillar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 30px; }
-        .pillar-card { background: white; border-radius: 10px; padding: 24px 20px; text-align: center; border-bottom: 4px solid var(--teal); box-shadow: 0 2px 12px rgba(41,171,164,0.08); transition: transform 0.2s; }
-        .pillar-card:hover { transform: translateY(-3px); }
-        .pillar-card .icon { margin-bottom: 12px; } .icon img { width: 32px; height: 32px; } .pillar-card .icon { [img replaced]margin-bottom: 12px; }
-        .pillar-card h3 { font-size: 13px; font-weight: 700; text-transform: uppercase; color: var(--teal); margin: 0 0 8px; border: none; padding: 0; }
-        .pillar-card p { font-size: 13px; color: #666; margin: 0; line-height: 1.5; }
+        .content-main p { font-size: 16px; color: #555; margin-top: 0; margin-bottom: 20px; }
+
+        /* ROW LAYOUT */
+        .service-row { display: flex; gap: 28px; align-items: flex-start; background: white; border-radius: 10px; padding: 28px 28px; border-left: 4px solid var(--teal); box-shadow: 0 2px 12px rgba(41,171,164,0.08); margin-bottom: 20px; }
+        .service-row-icon { flex: 0 0 36px; padding-top: 2px; }
+        .service-row-icon img { width: 36px; height: 36px; display: block; }
+        .service-row-text { flex: 1; min-width: 0; }
+        .service-row-text h3 { font-size: 14px; font-weight: 700; text-transform: uppercase; color: var(--teal); margin: 0 0 10px; }
+        .service-row-text p { font-size: 14px; color: #555; margin: 0; line-height: 1.6; }
+
+        /* compare note */
+        .compare-note { margin-top: 30px; font-size: 12px; color: #aaa; text-align: right; }
+        .compare-note a { color: var(--teal); text-decoration: none; font-weight: 600; }
+        .compare-note a:hover { text-decoration: underline; }
+
+        .content-sidebar { position: sticky; top: 20px; }
         .sidebar-nav { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 24px; }
         .sidebar-nav-header { background: var(--teal); color: white; padding: 16px 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
         .sidebar-nav ul { padding: 8px 0; }
@@ -80,14 +85,14 @@
             .dropdown-menu a { text-align: right; padding: 8px 25px 8px 20px; white-space: nowrap; }
             .page-body { grid-template-columns: 1fr; padding: 40px var(--page-padding); gap: 30px; }
             .content-sidebar { position: static; }
-            .pillar-grid { grid-template-columns: 1fr 1fr; }
         }
-        @media (max-width: 600px) { .pillar-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
-    <div class="background-fx-layer"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
-
+    <div class="background-fx-layer">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
     <div class="top-bar">
         <div class="top-bar-inner">
         <input type="checkbox" id="menu-toggle">
@@ -101,9 +106,9 @@
                     <li><a href="clinical-operations.html">Clinical Operations</a></li>
                     <li><a href="oncology.html">Oncology</a></li>
                     <li><a href="cardiology.html">Cardiology</a></li>
-                    <li><a href="investigator-initiated-studies.html" class="active">Investigator Initiated Studies</a></li>
+                    <li><a href="investigator-initiated-studies.html">Investigator Initiated Studies</a></li>
                     <li><a href="clinical-trial-unit-support.html">Clinical Trial Unit Support</a></li>
-                    <li><a href="clinical-monitoring-and-site-management.html">Clinical Monitoring and Site Management</a></li>
+                    <li><a href="clinical-monitoring-and-site-management.html" class="active">Clinical Monitoring and Site Management</a></li>
                     <li><a href="data-management.html">Data Management</a></li>
                     <li><a href="medical-monitoring.html">Medical Monitoring</a></li>
                     <li><a href="safety-monitoring.html">Safety Monitoring</a></li>
@@ -137,56 +142,41 @@
             <img src="../medwave-clinical-research.png" alt="Medwave Clinical Research">
         </div>
     </div>
-
     <div class="page-hero">
         <div class="hero-content">
-        <h1>Investigator Initiated Studies</h1>
-        <p>Full regulatory compliance at an investigator-friendly budget — we can even serve as your official sponsor.</p>
+            <h1>Clinical Monitoring and Site Management</h1>
+            <p>Site management and monitoring for complex (neuro)oncology trials.</p>
         </div>
     </div>
-
     <div class="page-body">
         <div class="content-main">
-            <h2>IIS Support</h2>
-            <p>Investigator-initiated studies (IIS) are a vital driver of clinical innovation — but they come with the same regulatory requirements as sponsor-initiated trials, often on a fraction of the budget. Medwave has built a specialized service model around exactly this challenge.</p>
+            <p>From site activation to close-out, Medwave handles clinical monitoring and site management across neuro-oncology and radiation oncology trials. We know these indications, the sites that run them, and what it takes to keep a study on track. We also support partner organisations with knowledge transfer for CRAs stepping into these indications for the first time.</p>
 
-            <div class="highlight-box">
-                <p>"Designing, initiating and executing an investigator initiated trial must fulfill the same general requirements as sponsor initiated trials — including ICH-GCP, insurance, local regulations, and safety reporting. We structure our services so that none of this is compromised, regardless of budget."</p>
+            <div class="service-row">
+                <div class="service-row-icon"><img src="../beeldmerk2.png" alt=""></div>
+                <div class="service-row-text">
+                    <h3>Site Set-up &amp; IRB Coordination</h3>
+                    <p>End-to-end site activation support, including site feasibility and selection, contract negotiations, ethics committee and IRB submissions, and regulatory documentation. Everything in place before the first patient arrives.</p>
+                </div>
             </div>
 
-            <h3>How We Support You</h3>
-            <div class="pillar-grid">
-                <div class="pillar-card">
-                    <div class="icon"><img src="../beeldmerk2.png" alt=""></div>
-                    <h3>Trial Design</h3>
-                    <p>Protocol writing and study design optimized for scientific value and regulatory acceptance.</p>
-                </div>
-                <div class="pillar-card">
-                    <div class="icon"><img src="../beeldmerk2.png" alt=""></div>
-                    <h3>Study Initiation</h3>
-                    <p>Regulatory submissions, ethics approvals, and site set-up handled from start to finish.</p>
-                </div>
-                <div class="pillar-card">
-                    <div class="icon"><img src="../beeldmerk2.png" alt=""></div>
-                    <h3>Study Execution</h3>
-                    <p>Monitoring, data management, safety reporting and study closure — full ICH-GCP compliance throughout.</p>
-                </div>
-                <div class="pillar-card">
-                    <div class="icon"><img src="../beeldmerk2.png" alt=""></div>
-                    <h3>Budget-Conscious Pricing</h3>
-                    <p>We recognize that IIS budgets operate at a different level and price our services accordingly.</p>
-                </div>
-                <div class="pillar-card">
-                    <div class="icon"><img src="../beeldmerk2.png" alt=""></div>
-                    <h3>Sponsor Services</h3>
-                    <p>Medwave can act as the official legal sponsor, taking on full financial administration and accountability.</p>
-                </div>
-                <div class="pillar-card">
-                    <div class="icon"><img src="../beeldmerk2.png" alt=""></div>
-                    <h3>Regulatory Compliance</h3>
-                    <p>ICH-GCP, local regulations, insurance requirements and safety reporting — all covered.</p>
+            <div class="service-row">
+                <div class="service-row-icon"><img src="../beeldmerk2.png" alt=""></div>
+                <div class="service-row-text">
+                    <h3>Neuro-oncology Monitoring</h3>
+                    <p>A dedicated group of CRAs with hands-on experience in neuro-oncology and radiation oncology, across both drug and device trials. They understand what these indications demand and how to monitor them accordingly.</p>
                 </div>
             </div>
+
+            <div class="service-row">
+                <div class="service-row-icon"><img src="../beeldmerk2.png" alt=""></div>
+                <div class="service-row-text">
+                    <h3>CRA Training &amp; Development</h3>
+                    <p>Hands-on knowledge transfer for CRAs from partner organisations working in neuro-oncology for the first time. We share practical know-how on PFS endpoints, RANO assessment criteria, pseudoprogression, and the day-to-day monitoring realities of GBM and other brain tumour trials, learnt from years on the ground in these studies.</p>
+                </div>
+            </div>
+
+            <p class="compare-note">Viewing row layout — <a href="clinical-monitoring-and-site-management.html">switch to card layout</a></p>
         </div>
 
         <div class="content-sidebar">
@@ -196,24 +186,25 @@
                     <li><a href="clinical-operations.html">Clinical Operations</a></li>
                     <li><a href="oncology.html">Oncology</a></li>
                     <li><a href="cardiology.html">Cardiology</a></li>
-                    <li><a href="investigator-initiated-studies.html" class="active">Investigator Initiated Studies</a></li>
+                    <li><a href="investigator-initiated-studies.html">Investigator Initiated Studies</a></li>
                     <li><a href="clinical-trial-unit-support.html">Clinical Trial Unit Support</a></li>
-                    <li><a href="clinical-monitoring-and-site-management.html">Clinical Monitoring and Site Management</a></li>
+                    <li><a href="clinical-monitoring-and-site-management.html" class="active">Clinical Monitoring and Site Management</a></li>
                     <li><a href="data-management.html">Data Management</a></li>
                     <li><a href="medical-monitoring.html">Medical Monitoring</a></li>
                     <li><a href="safety-monitoring.html">Safety Monitoring</a></li>
                 </ul>
             </div>
             <div class="sidebar-cta">
-                <h3>Planning an IIS?</h3>
-                <p>Let's talk about how we can support your study from design through to close-out.</p>
+                <h3>Ready to start?</h3>
+                <p>Let us know about your study and we'll find the right support model for you.</p>
                 <a href="mailto:info@medwave.nl">Get in Touch</a>
             </div>
         </div>
     </div>
-
     <div class="footer-wrapper">
-        <footer>&copy; 2025 Medwave &nbsp;|&nbsp; <a href="mailto:info@medwave.nl">info@medwave.nl</a></footer>
+        <footer>
+            &copy; 2025 Medwave &nbsp;|&nbsp; <a href="mailto:info@medwave.nl">info@medwave.nl</a>
+        </footer>
     </div>
 </body>
 </html>
