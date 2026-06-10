@@ -55,7 +55,7 @@
             position: relative; z-index: 2000;
         }
         .top-bar-inner {
-            max-width: 1300px; margin: 0 auto; padding: 0 var(--page-padding);
+            max-width: 1600px; margin: 0 auto; padding: 0 var(--page-padding);
             height: 100%; display: flex; align-items: center;
         }
 
@@ -96,7 +96,7 @@
         }
 
         /* --- 5. HEADER LOGOS --- */
-        .header-logo-wrapper { background: transparent; position: relative; z-index: 5; max-width: 1300px; margin: 0 auto; width: 100%; }
+        .header-logo-wrapper { background: transparent; position: relative; z-index: 5; max-width: 1600px; margin: 0 auto; width: 100%; }
         .main-split-container { display: flex; width: 100%; }
         .split-column { flex: 1; display: flex; flex-direction: column; position: relative; }
         .header-logo-wrapper { min-height: 160px; display: flex; align-items: stretch; }
@@ -127,19 +127,21 @@
         .content-inner-flex { display: flex; width: 100%; }
         .column-content {
             flex: 1; padding: 70px var(--page-padding) 70px;
-            color: white; display: flex; flex-direction: column; justify-content: center; min-height: 500px;
+            color: white; display: flex; flex-direction: column; justify-content: flex-start; min-height: 500px;
         }
         .split-column:first-child .column-content {
-            padding-left: max(var(--page-padding), calc((100vw - 1300px) / 2 + var(--page-padding)));
+            padding-left: max(var(--page-padding), calc((100vw - 1600px) / 2 + var(--page-padding)));
         }
         .split-column:last-child .column-content {
-            padding-right: max(var(--page-padding), calc((100vw - 1300px) / 2 + var(--page-padding)));
+            padding-right: max(var(--page-padding), calc((100vw - 1600px) / 2 + var(--page-padding)));
         }
         .column-content h2 { font-size: 28px; text-transform: uppercase; margin: 0 0 20px 0; font-weight: 700; }
 
         ul.check-list { list-style: none; padding: 0; margin-bottom: 40px; }
-        ul.check-list li { position: relative; padding-left: 25px; margin-bottom: 10px; font-size: 16px; }
+        ul.check-list li { position: relative; padding-left: 25px; margin-bottom: 10px; font-size: 20px; }
         ul.check-list li::before { content: "◆"; position: absolute; left: 0; top: 5px; font-size: 12px; opacity: 0.7; }
+        ul.check-list li a { color: white; text-decoration: none; opacity: 0.9; }
+        ul.check-list li a:hover { opacity: 1; text-decoration: underline; }
 
         .btn { display: inline-block; background: white; padding: 12px 30px; font-size: 13px; font-weight: 700; text-transform: uppercase; text-decoration: none; border-radius: 4px; transition: transform 0.2s, box-shadow 0.2s; align-self: flex-start; }
         .text-teal { color: var(--teal); } .text-orange { color: var(--orange); }
@@ -193,25 +195,27 @@
             ul.check-list li { padding-left: 0; margin-bottom: 12px; }
             ul.check-list li::before { position: relative; left: auto; top: auto; display: inline-block; margin-right: 8px; }
             .btn { align-self: center !important; margin-top: 20px; }
+            .tagline-logo { width: 44px !important; height: 44px !important; }
+            .tagline-logo-r { margin-right: 0 !important; }
+            .tagline-inner { justify-content: center !important; gap: 16px !important; }
+            .tagline-strip h2 { flex: 0 1 auto !important; font-size: clamp(13px, 3.5vw, 18px) !important; }
         }
 
         /* --- 8. TAGLINE STRIP --- */
         .tagline-strip { background: transparent; padding: 70px 0; }
         .tagline-inner {
-            max-width: 1300px; margin: 0 auto; padding: 0 var(--page-padding);
-            display: flex; align-items: center;
+            max-width: 1600px; margin: 0 auto; padding: 0 var(--page-padding);
+            display: flex; align-items: center; gap: 28px;
         }
-        .tagline-logo { width: 90px; height: 90px; object-fit: contain; flex-shrink: 0; }
-        /* right logo: margin-right aligns its right edge with right edge of Medical Imaging header logo */
-        /* MI logo right edge = 50% + page-padding + 250px from container left                          */
-        /* from right of inner container: 50% - page-padding - 250px                                   */
-        .tagline-logo-r { margin-right: calc(50% - var(--page-padding) - 250px); }
-        .tagline-strip h2 { flex: 1; text-align: center; font-size: clamp(22px, 3vw, 36px); font-weight: 300; color: var(--text-dark); margin: 0; line-height: 1.4; letter-spacing: -0.3px; }
-        .tagline-strip h2 strong { font-weight: 700; color: var(--teal); }
-        .tagline-strip h2 strong.orange { color: var(--orange); }
+        .tagline-logo { width: 75px; height: 75px; object-fit: contain; flex-shrink: 0; }
+        /* margin-right set dynamically by JS to align with top-right header logo */
+        .tagline-logo-r { margin-right: 0; }
+        .tagline-strip h2 { flex: 1; text-align: center; font-size: clamp(17px, 1.86vw, 24px); font-weight: 300; color: var(--text-dark); margin: 0; line-height: 1.4; letter-spacing: -0.2px; }
+        .tagline-strip h2 strong { font-weight: 700; color: var(--text-dark); }
+        .tagline-strip h2 strong.orange { color: var(--text-dark); }
 
         /* --- 9. FOOTER --- */
-        .footer-wrapper { margin-top: 0; }
+        .footer-wrapper { margin-top: auto; }
         footer { background-color: var(--col-footer); color: white; text-align: center; padding: 30px 20px; font-size: 13px; }
     </style>
 </head>
@@ -250,7 +254,7 @@
                     <li><a href="medical-imaging/central-imaging-in-oncology.html">Central Imaging in Oncology</a></li>
                     <li><a href="medical-imaging/central-imaging-in-cardiology.html">Central Imaging in Cardiology</a></li>
                     <li><a href="medical-imaging/tumor-response-training.html">Tumor Response Training</a></li>
-                    <li><a href="medical-imaging/central-dosimetry-for-theranostics.html">Central Dosimetry for Theranostics</a></li>
+                    
                     <li><a href="medical-imaging/post-processing-perfusion-mri.html">Post-processing Perfusion MRI</a></li>
                 </ul>
             </li>
@@ -261,6 +265,14 @@
                     <li><a href="about/core-team.html">Core Team</a></li>
                     <li><a href="about/joining-medwave.html">Joining Medwave</a></li>
                     <li><a href="about/experiences.html">Experiences</a></li>
+                </ul>
+            </li>
+            <li class="menu-item dropdown">
+                <a href="news.html" class="menu-link">News</a>
+                <ul class="dropdown-menu">
+                    <li><a href="news.html">Cards</a></li>
+                    <li><a href="news-timeline.html">Timeline</a></li>
+                    <li><a href="news-list.html">List</a></li>
                 </ul>
             </li>
             <li class="menu-item"><a href="contact.html" class="menu-link">Contact</a></li>
@@ -294,22 +306,23 @@
                 <div class="column-content">
                     <h2>Medwave Clinical Research</h2>
                     <ul class="check-list">
-                        <li>Dedicated to neuro-oncology and radiation oncology research.</li>
-                        <li>Full service clinical trial concept for Investigator-Initiated-Studies.</li>
-                        <li>Tailor made trial support for Biotech firms.</li>
+                        <li><a href="clinical-research/clinical-monitoring-and-site-management.html">Clinical Monitoring and Site Management</a></li>
+                        <li><a href="clinical-research/data-management.html">Data Management</a></li>
+                        <li><a href="clinical-research/medical-monitoring.html">Medical Monitoring</a></li>
+                        <li><a href="clinical-research/safety-monitoring.html">Safety Monitoring</a></li>
                     </ul>
-                    <a href="clinical-research/clinical-operations.html" class="btn text-teal">Explore Services</a>
                 </div>
             </div>
             <div class="split-column">
                 <div class="column-content">
                     <h2>Medwave Medical Imaging</h2>
                     <ul class="check-list">
-                        <li>Central image repository &amp; Imaging Review.</li>
-                        <li>Post-processing DCE-MRI and DSC-MRI.</li>
-                        <li>Tumor imaging and tumor response trainings.</li>
+                        <li><a href="medical-imaging/central-image-repository.html">Central Image Repository</a></li>
+                        <li><a href="medical-imaging/central-imaging-in-oncology.html">Central Imaging in Oncology</a></li>
+                        <li><a href="medical-imaging/central-imaging-in-cardiology.html">Central Imaging in Cardiology</a></li>
+                        <li><a href="medical-imaging/tumor-response-training.html">Tumor Response Training</a></li>
+                        <li><a href="medical-imaging/post-processing-perfusion-mri.html">Post-processing Perfusion MRI</a></li>
                     </ul>
-                    <a href="medical-imaging/central-image-repository.html" class="btn text-orange">Explore Services</a>
                 </div>
             </div>
         </div>
@@ -318,7 +331,7 @@
     <div class="tagline-strip">
         <div class="tagline-inner">
             <img src="beeldmerk2.png" alt="" class="tagline-logo">
-            <h2>Your partner for <strong>radio-oncology</strong> and <strong class="orange">imaging workflows</strong></h2>
+            <h2>Your partner for (radiation)-oncology and imaging collection and central review</h2>
             <img src="beeldmerk1.png" alt="" class="tagline-logo tagline-logo-r">
         </div>
     </div>
@@ -328,5 +341,53 @@
             &copy; 2025 Medwave &nbsp;|&nbsp; <a href="mailto:info@medwave.nl" style="color:white;">info@medwave.nl</a>
         </footer>
     </div>
+    <script>
+        (function () {
+            function alignToMIText() {
+                const h2R     = document.querySelectorAll('.column-content h2')[1];
+                const logoR   = document.querySelector('.tagline-logo-r');
+                const inner   = document.querySelector('.tagline-inner');
+                const topImgR = document.querySelectorAll('.logo-placeholder img')[1];
+                if (!h2R || !logoR || !inner || !topImgR) return;
+
+                // Measure right edge of rendered "MEDWAVE MEDICAL IMAGING" text
+                const tn = h2R.firstChild;
+                if (!tn || tn.nodeType !== 3) return;
+                const range = document.createRange();
+                range.setStart(tn, 0);
+                range.setEnd(tn, tn.textContent.length);
+                const rects = range.getClientRects();
+                if (!rects.length) return;
+                let textRight = 0;
+                for (const r of rects) textRight = Math.max(textRight, r.right);
+
+                // Shared measurement: right edge of tagline-inner content area
+                const innerRect    = inner.getBoundingClientRect();
+                const pr           = parseFloat(getComputedStyle(inner).paddingRight) || 0;
+                const contentRight = innerRect.right - pr;
+                const mr           = Math.max(0, contentRight - textRight);
+
+                // Bottom-right tagline logo
+                logoR.style.marginRight = mr + 'px';
+
+                // Top-right header logo: shift (not resize) so its right edge = textRight
+                topImgR.style.marginLeft = '0px';
+                const naturalLeft = topImgR.getBoundingClientRect().left;
+                topImgR.style.marginLeft = Math.max(0, textRight - topImgR.offsetWidth - naturalLeft) + 'px';
+
+                // Login button in top bar (same container width/padding → same contentRight)
+                const loginBtn = document.querySelector('.login-btn');
+                if (loginBtn) loginBtn.style.marginRight = mr + 'px';
+            }
+
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(alignToMIText);
+            } else {
+                window.addEventListener('load', alignToMIText);
+            }
+            window.addEventListener('resize', alignToMIText);
+        })();
+    </script>
+    <script src="nav-mobile.js"></script>
 </body>
 </html>

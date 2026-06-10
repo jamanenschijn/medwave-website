@@ -33,7 +33,7 @@
 
         /* TOP BAR */
         .top-bar { background-color: var(--col-top-bar); height: 50px; position: relative; z-index: 2000; }
-        .top-bar-inner { max-width: 1300px; margin: 0 auto; padding: 0 var(--page-padding); height: 100%; display: flex; align-items: center; }
+        .top-bar-inner { max-width: 1600px; margin: 0 auto; padding: 0 var(--page-padding); height: 100%; display: flex; align-items: center; }
         .main-menu { display: flex; height: 100%; align-items: center; gap: 10px; margin-right: auto; }
         .menu-item { position: relative; height: 100%; display: flex; align-items: center; }
         .menu-link { color: rgba(255,255,255,0.95); text-decoration: none; font-size: 13px; font-weight: 600; text-transform: uppercase; transition: all 0.3s ease; position: relative; padding: 15px 15px; display: block; }
@@ -53,17 +53,17 @@
 
         /* LOGO BAR */
         .logo-bar { background: transparent; padding: 20px 0; }
-        .logo-bar-inner { max-width: 1300px; margin: 0 auto; padding: 0 var(--page-padding); }
+        .logo-bar-inner { max-width: 1600px; margin: 0 auto; padding: 0 var(--page-padding); }
         .logo-bar-inner { display: flex; align-items: center; gap: 40px; } .logo-bar-inner img { height: 55px; width: auto; }
 
         /* HERO */
         .page-hero { background-color: var(--teal); padding: 50px 0; color: white; }
         .page-hero h1 { font-size: clamp(28px, 4vw, 46px); text-transform: uppercase; font-weight: 700; margin: 0 0 12px; letter-spacing: -0.5px; }
         .page-hero p { font-size: 18px; opacity: 0.9; margin: 0; max-width: 640px; font-weight: 300; }
-        .hero-content { max-width: 1300px; margin: 0 auto; padding: 0 var(--page-padding); }
+        .hero-content { max-width: 1600px; margin: 0 auto; padding: 0 var(--page-padding); }
 
         /* CONTENT */
-        .page-body { flex: 1; padding: 60px var(--page-padding) 40px; display: grid; grid-template-columns: 1fr 300px; gap: 50px; max-width: 1300px; width: 100%; margin: 0 auto; align-items: start; }
+        .page-body { flex: 1; padding: 60px var(--page-padding) 40px; display: grid; grid-template-columns: 1fr 300px; gap: 50px; max-width: 1600px; width: 100%; margin: 0 auto; align-items: start; }
         .content-main h2 { font-size: 22px; text-transform: uppercase; color: var(--teal); font-weight: 700; margin: 0 0 20px; padding-bottom: 10px; border-bottom: 2px solid var(--teal); }
         .content-main h3 { font-size: 16px; text-transform: uppercase; color: var(--teal); font-weight: 700; margin: 30px 0 14px; }
         .content-main p { font-size: 16px; color: #555; margin-bottom: 20px; }
@@ -160,7 +160,6 @@
                         <li><a href="../medical-imaging/central-imaging-in-oncology.html">Central Imaging in Oncology</a></li>
                         <li><a href="../medical-imaging/central-imaging-in-cardiology.html">Central Imaging in Cardiology</a></li>
                         <li><a href="../medical-imaging/tumor-response-training.html">Tumor Response Training</a></li>
-                        <li><a href="../medical-imaging/central-dosimetry-for-theranostics.html">Dosimetry for Theranostics</a></li>
                         <li><a href="../medical-imaging/post-processing-perfusion-mri.html">Post-processing Perfusion MRI</a></li>
                     </ul>
                 </li>
@@ -173,7 +172,15 @@
                         <li><a href="experiences.html">Experiences</a></li>
                     </ul>
                 </li>
-                <li class="menu-item"><a href="../contact.html" class="menu-link">Contact</a></li>
+                <li class="menu-item dropdown">
+                <a href="../news.html" class="menu-link">News</a>
+                <ul class="dropdown-menu">
+                    <li><a href="../news.html">Cards</a></li>
+                    <li><a href="../news-timeline.html">Timeline</a></li>
+                    <li><a href="../news-list.html">List</a></li>
+                </ul>
+            </li>
+            <li class="menu-item"><a href="../contact.html" class="menu-link">Contact</a></li>
             </ul>
         </div>
     </div>
@@ -261,5 +268,6 @@
     <div class="footer-wrapper">
         <footer>&copy; 2025 Medwave &mdash; <a href="mailto:info@medwave.nl">info@medwave.nl</a></footer>
     </div>
+    <script src="../nav-mobile.js"></script>
 </body>
 </html>

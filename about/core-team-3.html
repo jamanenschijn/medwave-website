@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Careers | Medwave</title>
+    <title>Core Team | Medwave</title>
     <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -61,22 +61,31 @@
 
         .page-body { flex: 1; padding: 60px var(--page-padding) 40px; display: grid; grid-template-columns: 1fr 300px; gap: 50px; max-width: 1600px; width: 100%; margin: 0 auto; align-items: start; }
         .content-main h2 { font-size: 22px; text-transform: uppercase; color: var(--teal); font-weight: 700; margin: 0 0 20px; padding-bottom: 10px; border-bottom: 2px solid var(--teal); }
-        .content-main h3 { font-size: 16px; text-transform: uppercase; color: var(--teal); font-weight: 700; margin: 30px 0 14px; }
         .content-main p { font-size: 16px; color: #555; margin-bottom: 20px; }
 
-        .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 10px 0 30px; }
-        .value-card { background: white; border-radius: 10px; padding: 22px 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); border-left: 4px solid var(--teal); }
-        .value-card .icon { margin-bottom: 10px; }
-        .value-card .icon img { width: 32px; height: 32px; }
-        .value-card h4 { font-size: 13px; font-weight: 700; text-transform: uppercase; color: var(--teal); margin: 0 0 6px; }
-        .value-card p { font-size: 13px; color: #666; margin: 0; line-height: 1.5; }
+        /* TEAM CARDS */
+        .team-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-top: 10px; }
+        .team-card {
+            background: white; border-radius: 12px; padding: 28px 28px 24px;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+            border-top: 4px solid var(--teal);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .team-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(41,171,164,0.13); }
+        .team-card-header { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+        .team-avatar { width: 48px; height: 48px; flex-shrink: 0; }
+        .team-avatar img { width: 48px; height: 48px; }
+        .team-card-with-photo { padding: 28px 28px 24px; overflow: hidden; }
+        .team-photo { width: 50%; border-radius: 8px; overflow: hidden; margin: 0 auto; }
+        .team-photo img { width: 100%; height: auto; display: block; }
+        .team-card-body { padding: 20px; }
+        .team-name { font-size: 17px; font-weight: 700; color: var(--text-dark); margin: 0 0 2px; }
+        .team-title { font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--orange); letter-spacing: 0.5px; }
+        .team-bio { font-size: 14px; color: #555; line-height: 1.6; margin: 0 0 16px; }
+        .team-email { font-size: 13px; font-weight: 600; color: var(--teal); text-decoration: none; }
+        .team-email:hover { text-decoration: underline; }
 
-        .open-application { background: white; border-radius: 12px; padding: 32px; box-shadow: 0 4px 20px rgba(0,0,0,0.07); border-top: 4px solid var(--orange); margin-top: 10px; }
-        .open-application h3 { font-size: 18px; font-weight: 700; text-transform: uppercase; color: var(--orange); margin: 0 0 12px; }
-        .open-application p { font-size: 15px; color: #555; margin-bottom: 24px; }
-        .apply-btn { display: inline-block; background: var(--orange); color: white; padding: 13px 32px; border-radius: 4px; text-decoration: none; font-size: 13px; font-weight: 700; text-transform: uppercase; transition: transform 0.2s, box-shadow 0.2s; }
-        .apply-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(247,148,29,0.3); }
-
+        /* SIDEBAR */
         .content-sidebar { position: sticky; top: 20px; }
         .sidebar-nav { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 24px; }
         .sidebar-nav-header { background: var(--teal); color: white; padding: 16px 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
@@ -109,10 +118,9 @@
             .dropdown-menu a { text-align: right; padding: 8px 25px 8px 20px; white-space: nowrap; }
             .page-body { grid-template-columns: 1fr; padding: 40px var(--page-padding); gap: 30px; }
             .content-sidebar { position: static; }
-            .values-grid { grid-template-columns: 1fr 1fr; }
         }
         @media (max-width: 600px) {
-            .values-grid { grid-template-columns: 1fr; }
+            .team-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -156,9 +164,10 @@
                 <li class="menu-item dropdown">
                     <a href="../about/our-story.html" class="menu-link">About</a>
                     <ul class="dropdown-menu">
-                        <li><a href="our-story.html">Our Story</a></li>
-                        <li><a href="core-team.html">Core Team</a></li>
-                        <li><a href="careers.html" class="active">Careers</a></li>
+                        <li><a href="our-story.html">About</a></li>
+                        <li><a href="core-team.html" class="active">Core Team</a></li>
+                        <li><a href="joining-medwave.html">Joining Medwave</a></li>
+                        <li><a href="experiences.html">Experiences</a></li>
                     </ul>
                 </li>
                 <li class="menu-item dropdown">
@@ -177,62 +186,123 @@
     <div class="logo-bar">
         <div class="logo-bar-inner">
             <img src="../medwave-clinical-research.png" alt="Medwave Clinical Research">
-            <img src="../medwave-medical-imaging.png" alt="Medwave Medical Imaging">
         </div>
     </div>
 
     <div class="page-hero">
         <div class="hero-content">
-            <h1>Careers</h1>
-            <p>Join a small, experienced team where your work directly shapes clinical trials and patient outcomes.</p>
+            <h1>Core Team</h1>
+            <p>Experienced professionals with hands-on backgrounds in clinical research, medical imaging, and data science.</p>
         </div>
     </div>
 
     <div class="page-body">
         <div class="content-main">
-            <h2>Working at Medwave</h2>
-            <p>Medwave is a flat, no-nonsense organisation. We don't have layers of management between you and the work. If you join us, you will work directly with experienced directors on real studies — not on support tasks for someone else's project.</p>
-            <p>We work across oncology, cardiology, and medical imaging, which means the work is varied and technically demanding. We value people who take initiative, know their field, and can operate independently when needed.</p>
+            <h2>Meet the Team</h2>
+            <p>Our directors bring together over a century of combined experience in clinical trials, medical imaging, and biometry — all with a track record of working directly in hospitals and industry, not just advising from the sidelines.</p>
 
-            <h2>What We Value</h2>
-            <div class="values-grid">
-                <div class="value-card">
-                    <div class="icon"><img src="../beeldmerk2.png" alt=""></div>
-                    <h4>Hands-on Expertise</h4>
-                    <p>We hire people who have done the work, not just managed it from a distance.</p>
+            <div class="team-grid">
+                <div class="team-card team-card-with-photo">
+                    <div class="team-photo">
+                        <img src="../john_uiters.png" alt="John Uiters">
+                    </div>
+                    <div class="team-card-body">
+                        <div class="team-card-header">
+                            <div class="team-avatar"><img src="../beeldmerk2.png" alt=""></div>
+                            <div>
+                                <div class="team-name">John Uiters, MSc.</div>
+                                <div class="team-title">CEO</div>
+                            </div>
+                        </div>
+                        <p class="team-bio">25+ experience in clinical trials. Focus on oncology trials with central imaging.</p>
+                        <a href="mailto:john.uiters@medwave.nl" class="team-email">john.uiters@medwave.nl</a>
+                    </div>
                 </div>
-                <div class="value-card">
-                    <div class="icon"><img src="../beeldmerk2.png" alt=""></div>
-                    <h4>Pragmatism</h4>
-                    <p>We solve problems efficiently and avoid unnecessary complexity or overhead.</p>
-                </div>
-                <div class="value-card">
-                    <div class="icon"><img src="../beeldmerk2.png" alt=""></div>
-                    <h4>Ownership</h4>
-                    <p>Everyone at Medwave takes responsibility for their work and their results.</p>
-                </div>
-                <div class="value-card">
-                    <div class="icon"><img src="../beeldmerk2.png" alt=""></div>
-                    <h4>Scientific Rigour</h4>
-                    <p>The studies we run affect patients. We take compliance and data integrity seriously.</p>
-                </div>
-                <div class="value-card">
-                    <div class="icon"><img src="../beeldmerk2.png" alt=""></div>
-                    <h4>Collaboration</h4>
-                    <p>Small team, shared goals. Everyone contributes across disciplines when needed.</p>
-                </div>
-                <div class="value-card">
-                    <div class="icon"><img src="../beeldmerk2.png" alt=""></div>
-                    <h4>Flexibility</h4>
-                    <p>We work across the EU and support flexible arrangements for the right people.</p>
-                </div>
-            </div>
 
-            <h2>Open Applications</h2>
-            <div class="open-application">
-                <h3>No current vacancies — but we're always open</h3>
-                <p>We don't always advertise positions formally. If you have a background in clinical research, medical imaging, biometry, or clinical trial technologies and you think you'd fit at Medwave, send us an open application. Tell us who you are, what you've done, and what you're looking for.</p>
-                <a href="mailto:info@medwave.nl?subject=Open Application" class="apply-btn">Send Open Application</a>
+                <div class="team-card team-card-with-photo">
+                    <div class="team-photo">
+                        <img src="../ria_van_vliet.png" alt="Ria van Vliet">
+                    </div>
+                    <div class="team-card-body">
+                        <div class="team-card-header">
+                            <div class="team-avatar"><img src="../beeldmerk2.png" alt=""></div>
+                            <div>
+                                <div class="team-name">Ria van Vliet</div>
+                                <div class="team-title">Director Clinical Operations</div>
+                            </div>
+                        </div>
+                        <p class="team-bio">25+ experience in clinical trials. Can do it all, from study set-up to close out. No nonsense attitude.</p>
+                        <a href="mailto:ria.vanvliet@medwave.nl" class="team-email">ria.vanvliet@medwave.nl</a>
+                    </div>
+                </div>
+
+                <div class="team-card team-card-with-photo">
+                    <div class="team-photo">
+                        <img src="../jan-albert_manenschijn.png" alt="Jan-Albert Manenschijn">
+                    </div>
+                    <div class="team-card-body">
+                        <div class="team-card-header">
+                            <div class="team-avatar"><img src="../beeldmerk2.png" alt=""></div>
+                            <div>
+                                <div class="team-name">Jan-Albert Manenschijn, PhD</div>
+                                <div class="team-title">Director Medical Imaging and Clinical Data Management</div>
+                            </div>
+                        </div>
+                        <p class="team-bio">10 years in clinical research. Leads medical imaging, data management, and the in-house tooling that ties it all together.</p>
+                        <a href="mailto:jan-albert.manenschijn@medwave.nl" class="team-email">jan-albert.manenschijn@medwave.nl</a>
+                    </div>
+                </div>
+
+                <div class="team-card team-card-with-photo">
+                    <div class="team-photo">
+                        <img src="../Gustavo_Sarria.png" alt="Nils Schreiter">
+                    </div>
+                    <div class="team-card-body">
+                        <div class="team-card-header">
+                            <div class="team-avatar"><img src="../beeldmerk2.png" alt=""></div>
+                            <div>
+                                <div class="team-name">Nils Schreiter, MD</div>
+                                <div class="team-title">Director Medical Affairs</div>
+                            </div>
+                        </div>
+                        <p class="team-bio">+15 years experience in academic and pharmaceutical industry initiated clinical trials. Board certified physician for radiology and nuclear medicine.</p>
+                        <a href="mailto:nils.schreiter@medwave.nl" class="team-email">nils.schreiter@medwave.nl</a>
+                    </div>
+                </div>
+
+                <div class="team-card team-card-with-photo">
+                    <div class="team-photo">
+                        <img src="../uwe_gladbach.png" alt="Uwe Gladbach">
+                    </div>
+                    <div class="team-card-body">
+                        <div class="team-card-header">
+                            <div class="team-avatar"><img src="../beeldmerk2.png" alt=""></div>
+                            <div>
+                                <div class="team-name">Uwe Gladbach, Dipl.Ing.</div>
+                                <div class="team-title">Director Technologies</div>
+                            </div>
+                        </div>
+                        <p class="team-bio">25+ experience in clinical trial management. Passionate about e-solutions for data and DICOM image workflows in clinical projects.</p>
+                        <a href="mailto:ugladbach@clinflows.com" class="team-email">ugladbach@clinflows.com</a>
+                    </div>
+                </div>
+
+                <div class="team-card team-card-with-photo">
+                    <div class="team-photo">
+                        <img src="../Gustavo_Sarria.png" alt="Gustavo Sarria">
+                    </div>
+                    <div class="team-card-body">
+                        <div class="team-card-header">
+                            <div class="team-avatar"><img src="../beeldmerk2.png" alt=""></div>
+                            <div>
+                                <div class="team-name">Gustavo Sarria, MD</div>
+                                <div class="team-title">Consultant Radiation Oncologist</div>
+                            </div>
+                        </div>
+                        <p class="team-bio">Board certified radiation oncologist with extensive experience in academic and clinical settings.</p>
+                        <a href="mailto:g.sarria@medwave.nl" class="team-email">g.sarria@medwave.nl</a>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -240,17 +310,23 @@
             <div class="sidebar-nav">
                 <div class="sidebar-nav-header">About</div>
                 <ul>
-                    <li><a href="our-story.html">Our Story</a></li>
-                    <li><a href="core-team.html">Core Team</a></li>
-                    <li><a href="careers.html" class="active">Careers</a></li>
+                    <li><a href="our-story.html">About</a></li>
+                    <li><a href="core-team.html" class="active">Core Team</a></li>
+                    <li><a href="joining-medwave.html">Joining Medwave</a></li>
+                    <li><a href="experiences.html">Experiences</a></li>
                 </ul>
             </div>
             <div class="sidebar-cta">
-                <h3>Interested?</h3>
-                <p>Send us your CV and a short introduction — we read every application.</p>
-                <a href="mailto:info@medwave.nl?subject=Open Application">Apply Now</a>
+                <h3>Get in Touch</h3>
+                <p>Want to work with our team or learn more about Medwave?</p>
+                <a href="mailto:info@medwave.nl">Contact Us</a>
             </div>
         </div>
+    </div>
+
+    <div style="max-width:1600px; margin: 0 auto; padding: 20px 60px 40px; display:flex; gap:16px;">
+        <a href="core-team-2.html" style="display:inline-block; padding:10px 22px; background:transparent; border:2px solid var(--teal); color:var(--teal); border-radius:6px; font-size:13px; font-weight:700; text-transform:uppercase; text-decoration:none; letter-spacing:0.5px; transition:all .2s;">View variant: No cards</a>
+        <a href="core-team.html" style="display:inline-block; padding:10px 22px; background:transparent; border:2px solid var(--orange); color:var(--orange); border-radius:6px; font-size:13px; font-weight:700; text-transform:uppercase; text-decoration:none; letter-spacing:0.5px; transition:all .2s;">Back to main</a>
     </div>
 
     <div class="footer-wrapper">
@@ -259,3 +335,4 @@
     <script src="../nav-mobile.js"></script>
 </body>
 </html>
+

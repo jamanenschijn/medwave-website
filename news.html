@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News | Medwave</title>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --col-top-bar: #2b96bc;
+            --teal: #29aba4;
+            --orange: #f7941d;
+            --text-dark: #333333;
+            --page-padding: 60px;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Titillium Web', sans-serif;
+            color: var(--text-dark); line-height: 1.6;
+            overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh;
+            background-color: #f9fbfb;
+            background-image: radial-gradient(circle, #d1e8e6 0.5px, transparent 3px), linear-gradient(180deg, #e0f2f1 0%, #f9fbfb 100%);
+            background-size: 40px 40px, auto;
+        }
+        *, *:before, *:after { box-sizing: border-box; }
+        ul { list-style: none; margin: 0; padding: 0; }
+
+        /* BACKGROUND */
+        .background-fx-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; overflow: hidden; }
+        .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.2; }
+        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--teal); }
+        .blob-2 { bottom: 10%; right: -10%; width: 40vw; height: 40vw; background: var(--orange); }
+
+        /* TOP BAR */
+        .top-bar { background-color: var(--col-top-bar); height: 50px; position: relative; z-index: 2000; }
+        .top-bar-inner { max-width: 1600px; margin: 0 auto; padding: 0 var(--page-padding); height: 100%; display: flex; align-items: center; }
+        .main-menu { display: flex; height: 100%; align-items: center; gap: 10px; margin-right: auto; }
+        .menu-item { position: relative; height: 100%; display: flex; align-items: center; }
+        .menu-link { color: rgba(255,255,255,0.95); text-decoration: none; font-size: 13px; font-weight: 600; text-transform: uppercase; transition: all 0.3s ease; position: relative; padding: 15px 15px; display: block; }
+        .menu-link:hover { color: #fff; background-color: rgba(255,255,255,0.1); border-radius: 4px; }
+        .menu-link::after { content: ''; position: absolute; width: 0; height: 3px; bottom: 0; left: 15px; background-color: var(--orange); transition: width 0.3s; }
+        .menu-item:hover .menu-link::after { width: calc(100% - 30px); }
+        .menu-link.active-page::after { width: calc(100% - 30px); }
+        .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background-color: rgba(37,174,166,0.6); min-width: 240px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid rgba(255,255,255,0.4); border-radius: 0 0 10px 10px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); padding: 10px 0; z-index: 2001; }
+        .menu-item:hover .dropdown-menu { display: block; }
+        .dropdown-menu a { color: white; text-decoration: none; display: block; padding: 12px 20px; font-size: 13px; font-weight: 600; text-transform: uppercase; transition: 0.2s; border-bottom: 1px solid rgba(255,255,255,0.15); white-space: nowrap; }
+        .dropdown-menu li:last-child a { border-bottom: none; }
+        .dropdown-menu a:hover { background-color: rgba(255,255,255,0.2); padding-left: 25px; }
+        #menu-toggle { display: none; }
+        .menu-icon { display: none; font-size: 24px; color: white; cursor: pointer; margin-left: auto; z-index: 2002; }
+        .menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: transparent; z-index: 2000; }
+
+        /* LOGO BAR */
+        .logo-bar { background: transparent; padding: 20px 0; }
+        .logo-bar-inner { max-width: 1600px; margin: 0 auto; padding: 0 var(--page-padding); }
+        .logo-bar-inner img { height: 55px; width: auto; }
+
+        /* HERO */
+        .page-hero { background-color: var(--col-top-bar); padding: 50px 0; color: white; }
+        .page-hero h1 { font-size: clamp(28px, 4vw, 46px); text-transform: uppercase; font-weight: 700; margin: 0 0 12px; letter-spacing: -0.5px; }
+        .page-hero p { font-size: 18px; opacity: 0.9; margin: 0; max-width: 640px; font-weight: 300; }
+        .hero-content { max-width: 1600px; margin: 0 auto; padding: 0 var(--page-padding); }
+
+        /* NEWS CONTENT */
+        .news-outer { flex: 1; max-width: 1600px; width: 100%; margin: 0 auto; padding: 60px var(--page-padding) 80px; }
+
+        /* FILTER TABS */
+        .filter-tabs { display: flex; gap: 10px; margin-bottom: 44px; flex-wrap: wrap; }
+        .filter-btn {
+            background: white; border: 2px solid #ddd; color: #666;
+            padding: 8px 22px; border-radius: 24px; font-size: 13px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer;
+            font-family: 'Titillium Web', sans-serif;
+            transition: all 0.2s;
+        }
+        .filter-btn:hover { border-color: var(--col-top-bar); color: var(--col-top-bar); }
+        .filter-btn.active { background: var(--col-top-bar); border-color: var(--col-top-bar); color: white; }
+
+        /* NEWS GRID */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        /* NEWS CARD */
+        .news-card {
+            background: white; border-radius: 12px;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+            padding: 28px 26px 24px;
+            display: flex; flex-direction: column;
+            border-top: 4px solid #eee;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .news-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.11); }
+        .news-card[data-category="congress"] { border-top-color: var(--orange); }
+        .news-card[data-category="publication"] { border-top-color: var(--teal); }
+        .news-card[data-category="congress abstract"] { border-top-color: var(--orange); }
+        .news-badge-row { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+        .news-badge-row .news-badge { margin-bottom: 0; }
+        .news-card[data-category="abstract"] { border-top-color: var(--col-top-bar); }
+        .news-card.hidden { display: none; }
+
+        /* BADGE */
+        .news-badge {
+            display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.8px; padding: 3px 10px; border-radius: 12px; margin-bottom: 14px;
+            align-self: flex-start;
+        }
+        .badge-congress { background: #fff3e0; color: var(--orange); }
+        .badge-publication { background: #e8f8f7; color: var(--teal); }
+        .badge-abstract { background: #e3f2fd; color: var(--col-top-bar); }
+
+        /* CARD CONTENT */
+        .news-date { font-size: 12px; color: #aaa; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+        .news-card h3 { font-size: 16px; font-weight: 700; color: var(--text-dark); margin: 0 0 12px; line-height: 1.35; }
+        .news-card p { font-size: 14px; color: #666; margin: 0 0 20px; line-height: 1.6; flex: 1; }
+        .news-link {
+            display: inline-block; font-size: 13px; font-weight: 700; text-decoration: none;
+            color: var(--col-top-bar); text-transform: uppercase; letter-spacing: 0.3px;
+            margin-top: auto;
+            transition: color 0.2s;
+        }
+        .news-link:hover { color: var(--teal); }
+
+        /* NO RESULTS */
+        .no-results { grid-column: 1 / -1; text-align: center; padding: 60px 0; color: #aaa; font-size: 16px; display: none; }
+        .no-results.visible { display: block; }
+
+        /* FOOTER */
+        .footer-wrapper { margin-top: 0; }
+        footer { background-color: var(--teal); color: white; text-align: center; padding: 30px 20px; font-size: 13px; }
+        footer a { color: white; }
+
+        /* MOBILE */
+        @media (max-width: 1024px) {
+            :root { --page-padding: 25px; }
+            .top-bar-inner { justify-content: space-between; padding: 0 20px; }
+            .menu-icon { display: block; }
+            .main-menu { display: none; flex-direction: column; position: absolute; top: 50px; right: 0; width: max-content; min-width: 160px; height: auto; gap: 0; background-color: rgba(247,148,29,0.9); backdrop-filter: blur(12px); border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; padding: 10px 0; box-shadow: 0 10px 20px rgba(0,0,0,0.2); z-index: 2001; }
+            #menu-toggle:checked ~ .main-menu { display: flex; }
+            #menu-toggle:checked ~ .menu-overlay { display: block; }
+            .menu-item { width: 100%; flex-direction: column; align-items: stretch; height: auto; }
+            .menu-link { width: 100%; padding: 10px 25px 10px 20px; text-align: right; border-bottom: 1px solid rgba(255,255,255,0.1); white-space: nowrap; }
+            .menu-link::after { display: none; }
+            .dropdown-menu { top: 0; left: auto; right: 100%; width: max-content; min-width: 200px; border-radius: 10px; background-color: rgba(247,148,29,0.9); border: 1px solid rgba(255,255,255,0.2); padding: 5px 0; }
+            .dropdown-menu a { text-align: right; padding: 8px 25px 8px 20px; white-space: nowrap; }
+            .news-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 640px) {
+            .news-grid { grid-template-columns: 1fr; }
+            .filter-tabs { gap: 8px; }
+            .filter-btn { padding: 7px 16px; font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-fx-layer">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="top-bar">
+        <div class="top-bar-inner">
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="menu-icon">&#9776;</label>
+        <label for="menu-toggle" class="menu-overlay"></label>
+        <ul class="main-menu">
+            <li class="menu-item"><a href="index.html" class="menu-link">Home</a></li>
+            <li class="menu-item dropdown">
+                <a href="clinical-research/clinical-operations.html" class="menu-link">Clinical Research</a>
+                <ul class="dropdown-menu">
+                    <li><a href="clinical-research/clinical-operations.html">Clinical Operations</a></li>
+                    <li><a href="clinical-research/oncology.html">Oncology</a></li>
+                    <li><a href="clinical-research/cardiology.html">Cardiology</a></li>
+                    <li><a href="clinical-research/investigator-initiated-studies.html">Investigator Initiated Studies</a></li>
+                    <li><a href="clinical-research/clinical-trial-unit-support.html">Clinical Trial Unit Support</a></li>
+                    <li><a href="clinical-research/clinical-monitoring-and-site-management.html">Clinical Monitoring and Site Management</a></li>
+                    <li><a href="clinical-research/data-management.html">Data Management</a></li>
+                    <li><a href="clinical-research/medical-monitoring.html">Medical Monitoring</a></li>
+                    <li><a href="clinical-research/safety-monitoring.html">Safety Monitoring</a></li>
+                </ul>
+            </li>
+            <li class="menu-item dropdown">
+                <a href="medical-imaging/central-image-repository.html" class="menu-link">Medical Imaging</a>
+                <ul class="dropdown-menu">
+                    <li><a href="medical-imaging/central-image-repository.html">Central Image Repository</a></li>
+                    <li><a href="medical-imaging/central-imaging-in-oncology.html">Central Imaging in Oncology</a></li>
+                    <li><a href="medical-imaging/central-imaging-in-cardiology.html">Central Imaging in Cardiology</a></li>
+                    <li><a href="medical-imaging/tumor-response-training.html">Tumor Response Training</a></li>
+                    <li><a href="medical-imaging/post-processing-perfusion-mri.html">Post-processing Perfusion MRI</a></li>
+                </ul>
+            </li>
+            <li class="menu-item dropdown">
+                <a href="about/our-story.html" class="menu-link">About</a>
+                <ul class="dropdown-menu">
+                    <li><a href="about/our-story.html">About</a></li>
+                    <li><a href="about/core-team.html">Core Team</a></li>
+                    <li><a href="about/joining-medwave.html">Joining Medwave</a></li>
+                    <li><a href="about/experiences.html">Experiences</a></li>
+                </ul>
+            </li>
+            <li class="menu-item dropdown">
+                <a href="news.html" class="menu-link active-page">News</a>
+                <ul class="dropdown-menu">
+                    <li><a href="news.html" class="active">Cards</a></li>
+                    <li><a href="news-timeline.html">Timeline</a></li>
+                    <li><a href="news-list.html">List</a></li>
+                </ul>
+            </li>
+            <li class="menu-item"><a href="contact.html" class="menu-link">Contact</a></li>
+        </ul>
+        </div>
+    </div>
+
+    <div class="logo-bar">
+        <div class="logo-bar-inner">
+            <img src="medwave-clinical-research.png" alt="Medwave">
+        </div>
+    </div>
+
+    <div class="page-hero">
+        <div class="hero-content">
+            <h1>News</h1>
+            <p>Meetings, publications, and studies we contribute to.</p>
+        </div>
+    </div>
+
+    <div class="news-outer">
+
+        <div class="filter-tabs">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="congress">Congresses</button>
+            <button class="filter-btn" data-filter="publication">Publications</button>
+            <button class="filter-btn" data-filter="abstract">Abstracts</button>
+        </div>
+
+        <div class="news-grid" id="newsGrid">
+
+            <div class="news-card" data-category="congress">
+                <span class="news-badge badge-congress">Congress</span>
+                <div class="news-date">June 2026</div>
+                <h3>Padova Masterclass in Neuro-Oncology 2026</h3>
+                <p>We are sponsoring the full-day masterclass on primary brain tumours held in Padova, Italy on the 22nd of June 2026. The masterclass will cover the diagnosis and treatment of primary CNS tumours, including imaging, radiotherapy, and novel systemic therapies. Please get in touch if you are attending. We would be glad to meet.</p>
+                <a href="https://www.events-communication.com/event/masterclass2026/" class="news-link" target="_blank" rel="noopener">Event website →</a>
+                <a href="https://www.events-communication.com/wp-content/uploads/2026/02/programma-22-giugno-2026-REV-0204.pdf" class="news-link" style="display:block; margin-top:6px;" target="_blank" rel="noopener">Programme →</a>
+            </div>
+
+            <div class="news-card" data-category="congress abstract">
+                <div class="news-badge-row">
+                    <span class="news-badge badge-congress">Congress</span>
+                    <span class="news-badge badge-abstract">Abstract</span>
+                </div>
+                <div class="news-date">May 2026</div>
+                <h3>INTRAGO-II at ESTRO 2026 — Stockholm</h3>
+                <p>We attended ESTRO 2026 in Stockholm from 15–19 May. The INTRAGO-II study, a randomised phase III trial evaluating intraoperative radiotherapy in newly diagnosed glioblastoma, was presented in a plenary session by Prof. Dr. Frank A. Giordano. Medwave contributed to the study through clinical monitoring, imaging review support, site support, and study set-up activities.</p>
+                <a href="https://estro2026.estro.org/" class="news-link" target="_blank" rel="noopener">ESTRO 2026 →</a>
+            </div>
+
+            <div class="news-card" data-category="congress abstract">
+                <div class="news-badge-row">
+                    <span class="news-badge badge-congress">Congress</span>
+                    <span class="news-badge badge-abstract">Abstract</span>
+                </div>
+                <div class="news-date">May 2026</div>
+                <h3>GLORIA at ESTRO 2026 — Stockholm</h3>
+                <p>The GLORIA study, an ongoing phase I/II trial investigating CXCL12 inhibition combined with radiotherapy in glioblastoma, was presented at ESTRO 2026 by Dr. Julian Layer. Medwave supports the study's advanced imaging component, including central imaging review and imaging-related workflows.</p>
+                <a href="https://estro2026.estro.org/" class="news-link" target="_blank" rel="noopener">ESTRO 2026 →</a>
+            </div>
+
+            <div class="news-card" data-category="publication">
+                <span class="news-badge badge-publication">Publication</span>
+                <div class="news-date">April 2026</div>
+                <h3>GLORIA Trial Expansion Arm — Nature Communications</h3>
+                <p>The expansion arm of the GLORIA trial evaluated radiotherapy in combination with NOX-A12, a CXCL12-neutralizing aptamer, and bevacizumab in patients with newly diagnosed, MGMT-unmethylated glioblastoma. All patients in this cohort achieved a radiographic response, including one complete response. Median overall survival was 19.9 months, compared with 12.7 months for radiotherapy and NOX-A12 alone.</p>
+                <p>Medwave supports the study's advanced imaging component, including imaging workflow support and central imaging review activities.</p>
+                <a href="https://www.nature.com/articles/s41467-026-71362-7" class="news-link" target="_blank" rel="noopener">Read paper →</a>
+                <a href="https://www.nature.com/articles/s41467-026-71362-7.pdf" class="news-link" style="display:block; margin-top:6px;" target="_blank" rel="noopener">Download PDF →</a>
+            </div>
+
+            <div class="news-card" data-category="congress">
+                <span class="news-badge badge-congress">Congress</span>
+                <div class="news-date">October 2024</div>
+                <h3>19th EANO Meeting 2024 — Glasgow</h3>
+                <p>We attended the 19th annual meeting of the European Association of Neuro-Oncology in Glasgow. As neuro-oncology is central to our work, EANO is one of the meetings we follow closely.</p>
+                <a href="https://www.eano.eu/eano2024/" class="news-link" target="_blank" rel="noopener">EANO website →</a>
+            </div>
+
+            <div class="news-card" data-category="congress">
+                <span class="news-badge badge-congress">Congress</span>
+                <div class="news-date">October 2024</div>
+                <h3>ESMO Congress 2024 — Barcelona</h3>
+                <p>We attended ESMO 2024 in Barcelona. A good occasion to follow the latest developments across oncology and connect with colleagues in the field.</p>
+                <a href="https://www.esmo.org/" class="news-link" target="_blank" rel="noopener">ESMO website →</a>
+            </div>
+
+            <div class="news-card" data-category="publication">
+                <span class="news-badge badge-publication">Publication</span>
+                <div class="news-date">May 2024</div>
+                <h3>GLORIA Trial Dose Escalation — Nature Communications</h3>
+                <p>The dose-escalation phase of the ongoing GLORIA trial, published in Nature Communications, evaluated NOX-A12 — a CXCL12-neutralizing aptamer — combined with radiotherapy in ten patients with newly-diagnosed, MGMT-unmethylated glioblastoma. The combination was well-tolerated with no dose-limiting toxicities, and 90% of patients showed a radiographic response.</p>
+                <p>Medwave supports the study's advanced imaging component, including imaging workflow support and central imaging review activities.</p>
+                <a href="https://www.nature.com/articles/s41467-024-48416-9" class="news-link" target="_blank" rel="noopener">Read paper →</a>
+                <a href="https://www.nature.com/articles/s41467-024-48416-9.pdf" class="news-link" style="display:block; margin-top:6px;" target="_blank" rel="noopener">Download PDF →</a>
+            </div>
+
+            <div class="no-results" id="noResults">No items in this category yet.</div>
+
+        </div>
+    </div>
+
+    <div class="footer-wrapper">
+        <footer>
+            &copy; 2025 Medwave &nbsp;|&nbsp; <a href="mailto:info@medwave.nl">info@medwave.nl</a>
+        </footer>
+    </div>
+
+    <script>
+        const btns = document.querySelectorAll('.filter-btn');
+        const cards = document.querySelectorAll('.news-card[data-category]');
+        const noResults = document.getElementById('noResults');
+
+        btns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.dataset.filter;
+                let visible = 0;
+                cards.forEach(card => {
+                    if (filter === 'all' || card.dataset.category.split(' ').includes(filter)) {
+                        card.classList.remove('hidden');
+                        visible++;
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+                noResults.classList.toggle('visible', visible === 0);
+            });
+        });
+    </script>
+    <script src="nav-mobile.js"></script>
+</body>
+</html>

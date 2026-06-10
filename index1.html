@@ -38,7 +38,7 @@
 
         /* ── NAV ── */
         .top-bar { background-color: var(--col-top-bar); height: 50px; position: relative; z-index: 2000; }
-        .top-bar-inner { max-width: 1300px; margin: 0 auto; padding: 0 var(--page-padding); height: 100%; display: flex; align-items: center; }
+        .top-bar-inner { max-width: 1600px; margin: 0 auto; padding: 0 var(--page-padding); height: 100%; display: flex; align-items: center; }
         .main-menu { display: flex; height: 100%; align-items: center; gap: 10px; margin-right: auto; }
         .menu-item { position: relative; height: 100%; display: flex; align-items: center; }
         .menu-link { color: rgba(255,255,255,.95); text-decoration: none; font-size: 13px; font-weight: 600; text-transform: uppercase; transition: all .3s; position: relative; padding: 15px; display: block; }
@@ -154,7 +154,7 @@
             position: relative; z-index: 5;
         }
         .stats-inner {
-            max-width: 1300px; margin: 0 auto;
+            max-width: 1600px; margin: 0 auto;
             display: flex; align-items: center; justify-content: center;
             gap: 0; flex-wrap: wrap;
         }
@@ -181,7 +181,7 @@
             padding: 0 var(--page-padding) 60px;
         }
         .cta-inner {
-            max-width: 1300px; margin: 0 auto;
+            max-width: 1600px; margin: 0 auto;
             display: flex; align-items: center; justify-content: space-between;
             gap: 30px; flex-wrap: wrap;
             background: linear-gradient(135deg, rgba(41,171,164,.08), rgba(247,148,29,.08));
@@ -277,7 +277,7 @@
                     <li><a href="medical-imaging/central-imaging-in-oncology.html">Central Imaging in Oncology</a></li>
                     <li><a href="medical-imaging/central-imaging-in-cardiology.html">Central Imaging in Cardiology</a></li>
                     <li><a href="medical-imaging/tumor-response-training.html">Tumor Response Training</a></li>
-                    <li><a href="medical-imaging/central-dosimetry-for-theranostics.html">Central Dosimetry for Theranostics</a></li>
+                    
                     <li><a href="medical-imaging/post-processing-perfusion-mri.html">Post-processing Perfusion MRI</a></li>
                 </ul>
             </li>
@@ -288,6 +288,14 @@
                     <li><a href="about/core-team.html">Core Team</a></li>
                     <li><a href="about/joining-medwave.html">Joining Medwave</a></li>
                     <li><a href="about/experiences.html">Experiences</a></li>
+                </ul>
+            </li>
+            <li class="menu-item dropdown">
+                <a href="news.html" class="menu-link">News</a>
+                <ul class="dropdown-menu">
+                    <li><a href="news.html">Cards</a></li>
+                    <li><a href="news-timeline.html">Timeline</a></li>
+                    <li><a href="news-list.html">List</a></li>
                 </ul>
             </li>
             <li class="menu-item"><a href="contact.html" class="menu-link">Contact</a></li>
@@ -339,7 +347,6 @@
                         <a href="medical-imaging/central-image-repository.html" class="pill pill-ghost">Image Repository</a>
                         <a href="medical-imaging/central-imaging-in-oncology.html" class="pill pill-ghost">Imaging in Oncology</a>
                         <a href="medical-imaging/central-imaging-in-cardiology.html" class="pill pill-ghost">Imaging in Cardiology</a>
-                        <a href="medical-imaging/central-dosimetry-for-theranostics.html" class="pill pill-ghost">Theranostics</a>
                         <a href="medical-imaging/post-processing-perfusion-mri.html" class="pill pill-ghost">Perfusion MRI</a>
                     </div>
                 </div>
@@ -392,5 +399,6 @@
             &copy; 2025 Medwave &nbsp;|&nbsp; <a href="mailto:info@medwave.nl">info@medwave.nl</a>
         </footer>
     </div>
+    <script src="nav-mobile.js"></script>
 </body>
 </html>
