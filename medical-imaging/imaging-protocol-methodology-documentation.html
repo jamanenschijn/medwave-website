@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Central Imaging in Oncology | Medwave Medical Imaging</title>
+    <title>Imaging Protocol & Methodology Documentation | Medwave Medical Imaging</title>
     <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root { --col-top-bar: #2b96bc; --teal: #29aba4; --orange: #f7941d; --text-dark: #333333; --page-padding: 60px; --accent: #f7941d; --accent-dark: #d4780e; }
@@ -16,7 +16,6 @@
         .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--teal); }
         .blob-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: var(--orange); }
 
-        /* TOP BAR */
         .top-bar { background-color: var(--col-top-bar); height: 50px; position: relative; z-index: 2000; }
         .top-bar-inner { max-width: 1600px; margin: 0 auto; padding: 0 var(--page-padding); height: 100%; display: flex; align-items: center; }
         .main-menu { display: flex; height: 100%; align-items: center; gap: 10px; margin-right: auto; }
@@ -35,18 +34,15 @@
         .menu-icon { display: none; font-size: 24px; color: white; cursor: pointer; margin-left: auto; z-index: 2002; }
         .menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: transparent; z-index: 2000; }
 
-        /* LOGO BAR */
         .logo-bar { background: transparent; padding: 20px 0; }
         .logo-bar-inner { max-width: 1600px; margin: 0 auto; padding: 0 var(--page-padding); }
         .logo-bar-inner img { height: 55px; width: auto; }
 
-        /* HERO */
         .page-hero { background-color: var(--orange); padding: 50px 0; color: white; }
         .hero-content { max-width: 1600px; margin: 0 auto; padding: 0 var(--page-padding); }
         .page-hero h1 { font-size: clamp(28px, 4vw, 46px); text-transform: uppercase; font-weight: 700; margin: 0 0 12px; letter-spacing: -0.5px; }
         .page-hero p { font-size: 18px; opacity: 0.9; margin: 0; max-width: 640px; font-weight: 300; }
 
-        /* CONTENT */
         .page-body { flex: 1; padding: 60px var(--page-padding) 40px; display: grid; grid-template-columns: 1fr 300px; gap: 50px; max-width: 1600px; width: 100%; margin: 0 auto; align-items: start; }
         .content-main h2 { font-size: 22px; text-transform: uppercase; color: var(--accent); font-weight: 700; margin: 0 0 20px; padding-bottom: 10px; border-bottom: 2px solid var(--accent); }
         .content-main h3 { font-size: 16px; text-transform: uppercase; color: var(--accent); font-weight: 700; margin: 30px 0 14px; }
@@ -55,14 +51,12 @@
         .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 30px; }
         .feature-card { background: white; border-radius: 10px; padding: 24px 20px; border-top: 4px solid var(--accent); box-shadow: 0 2px 12px rgba(247,148,29,0.1); transition: transform 0.2s, box-shadow 0.2s; }
         .feature-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(247,148,29,0.18); }
-        .feature-card .icon { margin-bottom: 10px; } .icon img { width: 32px; height: 32px; } .feature-card .icon { [img replaced]margin-bottom: 10px; }
         .feature-card h3 { font-size: 14px; font-weight: 700; text-transform: uppercase; color: var(--accent); margin: 0 0 8px; border: none; padding: 0; }
         .feature-card p { font-size: 13px; color: #666; margin: 0; line-height: 1.5; }
 
         .highlight-box { background: white; border-radius: 12px; padding: 28px 30px; border-left: 5px solid var(--accent); box-shadow: 0 4px 20px rgba(247,148,29,0.1); margin-bottom: 30px; }
         .highlight-box p { margin: 0; font-size: 16px; color: #444; font-style: italic; line-height: 1.7; }
 
-        /* SIDEBAR */
         .content-sidebar { position: sticky; top: 20px; }
         .sidebar-nav { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 24px; }
         .sidebar-nav-header { background: var(--accent); color: white; padding: 16px 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
@@ -77,12 +71,10 @@
         .sidebar-cta a { display: inline-block; background: white; color: var(--accent); padding: 10px 24px; border-radius: 4px; text-decoration: none; font-size: 13px; font-weight: 700; text-transform: uppercase; transition: transform 0.2s, box-shadow 0.2s; }
         .sidebar-cta a:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.15); }
 
-        /* FOOTER */
         .footer-wrapper { margin-top: 60px; }
         footer { background-color: var(--orange); color: white; text-align: center; padding: 30px 20px; font-size: 13px; position: relative; z-index: 100; }
         footer a { color: white; }
 
-        /* MOBILE */
         @media (max-width: 1024px) {
             :root { --page-padding: 25px; }
             .top-bar-inner { justify-content: space-between; padding: 0 20px; }
@@ -120,18 +112,18 @@
                     <li><a href="../clinical-research/cardiology.html">Cardiology</a></li>
                     <li><a href="../clinical-research/investigator-initiated-studies.html">Investigator Initiated Studies</a></li>
                     <li><a href="../clinical-research/clinical-trial-unit-support.html">Clinical Trial Unit Support</a></li>
-                        <li><a href="../clinical-research/clinical-monitoring-and-site-management.html">Clinical Monitoring and Site Management</a></li>
-                        <li><a href="../clinical-research/data-management.html">Data Management</a></li>
-                        <li><a href="../clinical-research/medical-monitoring.html">Medical Monitoring</a></li>
+                    <li><a href="../clinical-research/clinical-monitoring-and-site-management.html">Clinical Monitoring and Site Management</a></li>
+                    <li><a href="../clinical-research/data-management.html">Data Management</a></li>
+                    <li><a href="../clinical-research/medical-monitoring.html">Medical Monitoring</a></li>
                     <li><a href="../clinical-research/safety-monitoring.html">Safety Monitoring</a></li>
                 </ul>
             </li>
             <li class="menu-item dropdown">
                 <a href="central-image-repository.html" class="menu-link">Medical Imaging</a>
                 <ul class="dropdown-menu">
-                    <li><a href="imaging-protocol-methodology-documentation.html">Imaging Protocol &amp; Methodology Documentation</a></li>
+                    <li><a href="imaging-protocol-methodology-documentation.html" class="active">Imaging Protocol &amp; Methodology Documentation</a></li>
                     <li><a href="central-image-repository.html">Image Collection and Quality Control</a></li>
-                    <li><a href="central-imaging-in-oncology.html" class="active">Central Imaging in Oncology</a></li>
+                    <li><a href="central-imaging-in-oncology.html">Central Imaging in Oncology</a></li>
                     <li><a href="central-imaging-in-cardiology.html">Central Imaging in Cardiology</a></li>
                     <li><a href="tumor-response-training.html">Site and CRA Training</a></li>
                     <li><a href="post-processing-perfusion-mri.html">Post-processing Perfusion MRI</a></li>
@@ -140,6 +132,7 @@
             <li class="menu-item dropdown">
                 <a href="../about/our-story.html" class="menu-link">About</a>
                 <ul class="dropdown-menu">
+                    <li><a href="../about/our-story.html">About</a></li>
                     <li><a href="../about/core-team.html">Core Team</a></li>
                     <li><a href="../about/joining-medwave.html">Joining Medwave</a></li>
                     <li><a href="../about/experiences.html">Experiences</a></li>
@@ -166,54 +159,50 @@
 
     <div class="page-hero">
         <div class="hero-content">
-            <h1>Central Imaging in Oncology</h1>
-            <p>Comprehensive central imaging workflow management for oncology trials — from remote review to response assessment.</p>
+            <h1>Imaging Protocol &amp; Methodology Documentation</h1>
+            <p>Defining how imaging should be performed and how results should be reviewed — before the first patient is scanned.</p>
         </div>
     </div>
 
     <div class="page-body">
         <div class="content-main">
-            <h2>Oncology Imaging Services</h2>
-            <p>Medwave offers full central imaging workflow management for oncology clinical trials with imaging-derived endpoints requiring central review. Our integrated approach connects EDC, imaging upload, and central review systems to minimise data redundancy and streamline reconciliation.</p>
+            <h2>Documentation Services</h2>
+            <p>Before a clinical trial begins, the imaging procedures and review methodology must be precisely defined and documented. Medwave prepares the study-specific documents that govern how imaging is acquired at sites and how images are reviewed centrally — ensuring consistency from the start.</p>
 
-
-            <h3>Central Review Concepts</h3>
-            <div class="feature-grid">
-                <div class="feature-card"><div class="icon"><img src="../beeldmerk1.png" alt=""></div><h3>Remote Radiology Review</h3><p>Blinded central remote radiology review by qualified radiologists, independent from site assessments.</p></div>
-                <div class="feature-card"><div class="icon"><img src="../beeldmerk1.png" alt=""></div><h3>Review with Adjudication</h3><p>Central radiology review with a formal adjudication process when readers disagree on response assessments.</p></div>
-                <div class="feature-card"><div class="icon"><img src="../beeldmerk1.png" alt=""></div><h3>Risk-Based Review</h3><p>Targeted central review based on risk profile, focusing resources where imaging discrepancies are most likely.</p></div>
-                <div class="feature-card"><div class="icon"><img src="../beeldmerk1.png" alt=""></div><h3>Site Reading</h3><p>Sites connect to read software with predefined response criteria and structured data capture for standardised assessments.</p></div>
-            </div>
-            <h3>Tumor Response Criteria Supported</h3>
-            <div class="feature-grid">
-                <div class="feature-card"><div class="icon"><img src="../beeldmerk1.png" alt=""></div><h3>Solid Tumors</h3><p>WHO, RECIST 1.0 &amp; 1.1, mRECIST HCC, irRC, irRECIST 1.1, Choi</p></div>
-                <div class="feature-card"><div class="icon"><img src="../beeldmerk1.png" alt=""></div><h3>Haematological</h3><p>Cheson, Lugano classification, LyRIC, PCWG2</p></div>
-                <div class="feature-card"><div class="icon"><img src="../beeldmerk1.png" alt=""></div><h3>CNS Tumors</h3><p>RANO, iRANO including modified RANO with parametric maps to differentiate pseudo-progression from true progression.</p></div>
-            </div>
-            <h3>Diagnostic Efficacy Assessments</h3>
-            <div class="feature-grid">
-                <div class="feature-card"><div class="icon"><img src="../beeldmerk1.png" alt=""></div><h3>Hot-spot Analysis</h3><p>Lesion identification and hot-spot analysis for investigational radionuclides.</p></div>
-                <div class="feature-card"><div class="icon"><img src="../beeldmerk1.png" alt=""></div><h3>Lesion Matching</h3><p>Tumour contrast assessments and systematic lesion matching across time points.</p></div>
-                <div class="feature-card"><div class="icon"><img src="../beeldmerk1.png" alt=""></div><h3>Sensitivity &amp; Specificity</h3><p>Standard of truth assessments with sensitivity and specificity analysis.</p></div>
+            <div class="highlight-box">
+                <p>"Well-prepared imaging documentation is the foundation of a reliable central review. Ambiguities in acquisition or review methodology, if not addressed upfront, inevitably surface as data quality issues during the trial."</p>
             </div>
 
+            <h3>Imaging Acquisition Guidelines</h3>
+            <div class="feature-grid">
+                <div class="feature-card"><h3>Protocol Design</h3><p>Study-specific imaging acquisition guidelines tailored to the modality, indication, and response criteria used in the trial.</p></div>
+                <div class="feature-card"><h3>Scanner Requirements</h3><p>Definition of minimum scanner specifications, sequence parameters, and technical requirements for participating sites.</p></div>
+                <div class="feature-card"><h3>Site Harmonisation</h3><p>Standardisation strategies to minimise variability in image quality across multi-site and multi-vendor environments.</p></div>
+            </div>
+
+            <h3>Methodology Review Documents</h3>
+            <div class="feature-grid">
+                <div class="feature-card"><h3>Review Charter</h3><p>A formal document defining the central review process, reader roles, adjudication procedures, and applicable response criteria.</p></div>
+                <div class="feature-card"><h3>Read Methodology</h3><p>Specification of blinded vs. unblinded reads, independent vs. consensus reads, and the handling of discordant assessments.</p></div>
+                <div class="feature-card"><h3>Criteria Specification</h3><p>Detailed specification of the response criteria to be applied — RECIST, RANO, Lugano, iRECIST or custom criteria — with protocol-specific adaptations documented.</p></div>
+            </div>
         </div>
 
         <div class="content-sidebar">
             <div class="sidebar-nav">
                 <div class="sidebar-nav-header">Medical Imaging</div>
                 <ul>
-                    <li><a href="imaging-protocol-methodology-documentation.html">Imaging Protocol &amp; Methodology Documentation</a></li>
+                    <li><a href="imaging-protocol-methodology-documentation.html" class="active">Imaging Protocol &amp; Methodology Documentation</a></li>
                     <li><a href="central-image-repository.html">Image Collection and Quality Control</a></li>
-                    <li><a href="central-imaging-in-oncology.html" class="active">Central Imaging in Oncology</a></li>
+                    <li><a href="central-imaging-in-oncology.html">Central Imaging in Oncology</a></li>
                     <li><a href="central-imaging-in-cardiology.html">Central Imaging in Cardiology</a></li>
                     <li><a href="tumor-response-training.html">Site and CRA Training</a></li>
                     <li><a href="post-processing-perfusion-mri.html">Post-processing Perfusion MRI</a></li>
                 </ul>
             </div>
             <div class="sidebar-cta">
-                <h3>Oncology Imaging Trial?</h3>
-                <p>Let us know about your trial design and we'll set up the right central review workflow.</p>
+                <h3>Need Documentation?</h3>
+                <p>We'll help you define imaging procedures and review methodology for your trial.</p>
                 <a href="mailto:info@medwave.nl">Get in Touch</a>
             </div>
         </div>
